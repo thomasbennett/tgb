@@ -48,20 +48,20 @@ jQuery(document).ready(function($) {
                         <div id="contactFormArea">                                
                             <!-- Contact Form Start //-->                            
                             <form action="#" id="contactform"> 
-                            <fieldset>
-                            <label><?php echo __('Name ','minerva');?></label><br />
-                            <input type="text" name="name" class="textfield" id="name" value="" /><br />
-                            <label><?php echo __('Subject ','minerva');?></label><br />
-                            <input type="text" name="subject" class="textfield" id="subject" value="" /><br />
-                            <label><?php echo __('E-mail ','minerva');?></label><br />
-                            <input type="text" name="email" class="textfield" id="email" value="" /><br />  
-                            <label><?php echo __('Message ','minerva');?></label><br />
-                            <textarea name="message" id="message" class="textarea" cols="2" rows="7"></textarea>
-                            <input type="hidden" name="sendto" id="sendto" value="<?php echo (get_option('minerva_info_email')) ? get_option('minerva_info_email') : get_option('admin_email');?>" />
-                            <input type="hidden" name="siteurl" id="siteurl" value="<?php echo get_template_directory_uri();?>" />
-                            <button type="submit" name="submit" id="buttonsend" class="input-submit"><?php echo __('Send Now','minerva');?></button>                            
-                            <span class="loading" style="display: none;"><?php echo __('Please wait..','minerva');?></span>                            
-                            </fieldset>
+                              <fieldset>
+                                <label><?php echo __('Name ','minerva');?></label><br />
+                                <input type="text" name="name" class="textfield" id="name" value="" /><br />
+                                <label><?php echo __('Subject ','minerva');?></label><br />
+                                <input type="text" name="subject" class="textfield" id="subject" value="" /><br />
+                                <label><?php echo __('E-mail ','minerva');?></label><br />
+                                <input type="text" name="email" class="textfield" id="email" value="" /><br />  
+                                <label><?php echo __('Message ','minerva');?></label><br />
+                                <textarea name="message" id="message" class="textarea" cols="2" rows="7"></textarea>
+                                <input type="hidden" name="sendto" id="sendto" value="<?php echo (get_option('minerva_info_email')) ? get_option('minerva_info_email') : get_option('admin_email');?>" />
+                                <input type="hidden" name="siteurl" id="siteurl" value="<?php echo get_template_directory_uri();?>" />
+                                <button type="submit" name="submit" id="buttonsend" class="input-submit"><?php echo __('Send Now','minerva');?></button>                            
+                                <span class="loading" style="display: none;"><?php echo __('Please wait..','minerva');?></span>                            
+                              </fieldset>
                             </form>
                             <!-- Contact Form End //-->                                      
                         </div>                                	
@@ -70,11 +70,11 @@ jQuery(document).ready(function($) {
                     <div class="contact-column2"><!-- contact column2 -->                    	
                        	<div id="map-shadow">
                        		<div id="map">
-                            
+                             <iframe width="423" height="302" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?hl=en&amp;q=P.O.+Box+128042+Nashville,+TN+37212&amp;ie=UTF8&amp;hq=&amp;hnear=Nashville,+Tennessee+37212&amp;gl=us&amp;t=m&amp;z=13&amp;vpsrc=0&amp;ll=36.128163,-86.796924&amp;output=embed"></iframe> 
                            </div>
                        	</div>
                         <div class="social-network">
-                        	<h4><?php echo __('Follow Us On','minerva');?></h4>
+                        	<h4><?php echo __('Connect','minerva');?></h4>
                           <?php 
                             $facebook_url = get_option('minerva_facebook_url');
                             $twitter_id = get_option('minerva_twitter_id');

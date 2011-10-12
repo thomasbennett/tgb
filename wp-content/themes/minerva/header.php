@@ -9,8 +9,6 @@
 } else { wp_title('',true); }?></title>
 <meta name="robots" content="follow, all" />
 <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
-<link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
-<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 <?php $favico = get_option('minerva_custom_favicon');?>
 <link rel="shortcut icon" href="<?php echo ($favico) ? $favico : get_template_directory_uri().'/images/favicon.ico';?>"/>
 <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
@@ -20,19 +18,19 @@
 <?php $cufon_font = get_option('minerva_cufon_font'); if ($cufon_font == "") $cufon_font = "Vegur_400.font.js";?>
 <script type="text/javascript" src="<?php echo get_template_directory_uri();?>/js/fonts/<?php echo $cufon_font;?>"></script>
 <script type="text/javascript">
-            Cufon.replace('h1') ('h2') ('h3') ('h4') ('h5') ('h6') ('#mainmenu') ('ul.tabs li a') 			
-			 ('.slogan-heading', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
-			 ('.slide-type1 h1', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
-			 ('.slide-type1 h3', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
-			 ('.slide-type2 h1', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
-			 ('.slide-type2 h3', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
-			 ('.slide-type4 h1', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
-			 ('h1.slide-big', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})			 
-			 ('.button', {hover:true,	textShadow:'0px 1px 0px #f0d698'})
-			 ('.button-big', {hover:true,	textShadow:'0px 1px 0px #f0d698'})
-			 ('.button-grey', {hover:true,	textShadow:'0px 1px 0px #ffffff'})
-       ('.right-info')
-			;
+  Cufon.replace('h1') ('h2') ('h3') ('h4') ('h5') ('h6') ('#mainmenu') ('ul.tabs li a') 			
+   ('.slogan-heading', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
+   ('.slide-type1 h1', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
+   ('.slide-type1 h3', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
+   ('.slide-type2 h1', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
+   ('.slide-type2 h3', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
+   ('.slide-type4 h1', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})
+   ('h1.slide-big', {hover:true, textShadow:'0px 1px 0px #f4f4f4'})			 
+   ('.button', {hover:true,	textShadow:'0px 1px 0px #f0d698'})
+   ('.button-big', {hover:true,	textShadow:'0px 1px 0px #f0d698'})
+   ('.button-grey', {hover:true,	textShadow:'0px 1px 0px #ffffff'})
+   ('.right-info')
+  ;
 </script>
 <?php if (is_home()) { ?>
 <script type="text/javascript"> 
