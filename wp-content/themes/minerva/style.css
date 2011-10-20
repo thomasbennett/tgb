@@ -791,7 +791,7 @@ h1.slide-big{
 }
 
 /* Normal Button Styling */
-a.button {
+.button {
     background: transparent url('images/bg_button_a.gif') no-repeat scroll top right;
     color: #222222;
     display: block;
@@ -803,22 +803,22 @@ a.button {
     text-decoration: none;
 }
 
-a.button:hover {
+.button:hover {
   color: #666;
 }
-a.button span {
+.button span {
     background: transparent url('images/bg_button_span.gif') no-repeat;
     display: block;
     line-height: 17px;
     padding: 6px 0 6px 18px;
 } 
-a.button:active {
+.button:active {
     background-position: bottom right;
     color: #222222;
     outline: none; /* hide dotted outline in Firefox */
 }
 
-a.button:active span {
+.button:active span {
     background-position: bottom left;
     padding: 6px 0 6px 18px; /* push text down 1px */
 } 
@@ -2952,4 +2952,10 @@ fieldset{
 	position:relative;
 	margin-right:10px;
 	top:3px;
+}
+
+.small-callout { 
+  font-size: 1.4em;
+  line-height: 1.6em;
+  width: 600px;
 }

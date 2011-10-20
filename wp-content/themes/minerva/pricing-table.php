@@ -50,21 +50,25 @@ Template Name: Pricing Table
                             <p class="per-text">per <?php if ($billing_cycle == "monthly") echo 'month'; else echo 'year';?></p>
                           </div>
                           <div class="signup-button">
-                            <a class="button" href="<?php echo $product_url;?>" onclick="this.blur();"><span><?php echo __("Sign Up",'minerva');?></span></a>
+                            <form action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/909216256452592" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
+                                <input name="item_name_1" type="hidden" value="<?php the_title(); ?>"/>
+                                <input name="item_description_1" type="hidden" value="<?php echo get_the_content(); ?>"/>
+                                <input name="item_quantity_1" type="hidden" value="1"/>
+                                <input name="item_price_1" type="hidden" value="<?php echo ($product_price * 12)?>"/>
+                                <input name="item_currency_1" type="hidden" value="USD"/>
+                                <input name="_charset_" type="hidden" value="utf-8"/>
+                                <input alt="" src="/wp-content/themes/minerva/images/signup.png" type="image"/>
+                            </form>
                           </div>                         
                         </div>
                       </div>
                     </div>
+
                     <?php endwhile;?>
+
+                    <div style="clear:both;"></div>
+                    <p class="small-callout">Because the dramatic variables of a custom website or a monthly maintenance plan, pricing will vary. However, don't hesitate to shoot an <a href="mailto:thomas.g.bennett@gmail.com">email</a> or give a call. Estimates are quick and painless.</p>
                     <p class="italictext"><?php echo $product_desc;?></p>
-                    
-                    <div class="client-logo"><!-- Client/Partner Logo -->
-                      <?php 
-                        $clients_cat = get_option('minerva_clients_cid');
-                        $clients_cid = get_cat_ID($clients_cat);
-                      ?>
-                      <?php if (function_exists('minerva_clientlist')) minerva_clientlist($clients_cid,5,"<h4>Trusted by the web's biggest site</h4>")?>
-                    </div>                
             	</div>
             </div>
             <!-- END OF CONTENT -->
