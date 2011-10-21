@@ -609,9 +609,9 @@ ul#slideshow li {
 	margin:45px 0px 0px 31px;
 	float:left;
 }
-.slide-type1 h1{
+.slide-type1 h2{
 	float:left;
-	margin:48px 0px 2px 38px;
+	margin:48px 0px 15px 38px;
 }
 .slide-type1 h3{
 	float:left;
@@ -633,7 +633,7 @@ ul#slideshow li {
 	margin:10px 95px 0px 31px;
 	float:right;
 }
-.slide-type2 h1{
+.slide-type2 h2{
 	float:left;
 	margin:48px 0px 15px 52px;
 }
@@ -672,12 +672,12 @@ ul#slideshow li {
 	margin:18px 0px 0px 207px;
 	float:left;
 }
-.slide-type4 h1{
+.slide-type4 h2{
 	font-size:42px;
 	text-align:center;
 	margin:40px 0px 2px 52px;
 }
-h1.slide-big{
+h2.slide-big{
 	margin:0px 0px 12px 52px;
 }
 

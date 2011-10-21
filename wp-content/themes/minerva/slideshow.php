@@ -22,7 +22,7 @@
                             <?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>
                               <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=308&amp;w=435&amp;zc=1" alt="" />                          
                             <?php } ?>                        
-                            <h1><?php the_title();?></h1>
+                            <h2><?php the_title();?></h2>
                             <h3><?php echo $subheading;?></h3>
                             <?php the_content();?>
                             <div class="big-button">
@@ -34,7 +34,7 @@
                             <?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>
                               <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=380&amp;w=381&amp;zc=1" alt="" />                          
                             <?php } ?>
-                            <h1><?php the_title();?></h1>
+                            <h2><?php the_title();?></h2>
                             <h3><?php echo $subheading;?></h3>
                             <?php the_content();?>
                             <div class="big-button2">
@@ -49,8 +49,8 @@
                         </li>
                         <?php } else { ?>
                         <li class="slide-type4">
-                        	  <h1><?php the_title();?></h1>
-                            <h1 class="slide-big"><?php echo $subheading;?></h1>
+                        	  <h2><?php the_title();?></h2>
+                            <h2 class="slide-big"><?php echo $subheading;?></h2>
                             <?php the_content();?>
                             <?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>
                               <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=123&amp;w=585&amp;zc=1" alt="" />                          

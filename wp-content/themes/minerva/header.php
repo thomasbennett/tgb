@@ -98,7 +98,7 @@
                     	<div id="search-box">
                         <form  method="get" id="search" action="<?php echo home_url();?>/" >
                           <fieldset class="search-fieldset">  
-                            <input type="text" name="s" id="s" value="<?php echo __('Begin Search','minerva');?>" onblur="if (this.value == ''){this.value = '<?php echo __('Search here...','minerva');?>'; }" onfocus="if (this.value == '<?php echo __('Search here...','minerva');?>') {this.value = ''; }"   />
+                            <input type="text" name="s" id="s" value="<?php echo __('Begin Searching...','minerva');?>" onblur="if (this.value == ''){this.value = '<?php echo __('Begin Searching...','minerva');?>'; }" onfocus="if (this.value == '<?php echo __('Begin Searching...','minerva');?>') {this.value = ''; }"   />
                             <input type="submit" class="go" value="" />
                           </fieldset>      					                	
                         </form>                      
