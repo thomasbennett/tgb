@@ -27,8 +27,7 @@
                           $footer_text = get_option('minerva_footer_text');
                           ?>
                             <?php echo $info_address ? $info_address : "15 Kuningan Raya 54th Street 14th / Indonesia,JKT 10220";?><br/>
-                            phone. <?php echo $info_phone ? $info_phone : "777.888.9999";?> / fax. <?php echo $info_fax ? $info_fax : "777.888.5555";?> / <?php echo $info_email ? $info_email : "info@minerva.com";?><br/>
-                            <?php echo $footer_text ? $footer_text : "Copyright &copy; 2011 Minerva Company.  All rights reserved";?>
+                            phone. <?php echo $info_phone ? $info_phone : "777.888.9999";?> / fax. <?php echo $info_fax ? $info_fax : "777.888.5555";?> / <a href="mailto: <?php echo $info_email ?>"><?php echo $info_email ? $info_email : "info@minerva.com";?></a><br/>
                         </div>
                     </div>
                     <!-- fopter content right -->

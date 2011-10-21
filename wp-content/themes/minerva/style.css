@@ -472,7 +472,7 @@ small{font-size:11px;}
 /* MAINMENU
 ------------------------------------------------------*/
 #mainmenu{	
-	margin:60px 0px 0px 15px;
+	margin:60px 0px 0px 10px;
 	float:right;
 }
 #mainmenu ul{
@@ -1588,7 +1588,7 @@ ul.process-list li{
 	border-radius: 4px;
 	float:left;
 	margin:0px 11px 30px 11px;
-  min-height: 465px;
+  min-height: 522px;
 	padding:9px 9px 4px 9px;
 	width:197px;
 	-webkit-border-radius: 4px;

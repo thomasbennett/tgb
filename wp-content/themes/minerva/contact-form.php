@@ -68,6 +68,10 @@ jQuery(document).ready(function($) {
                     </div>
                     
                     <div class="contact-column2"><!-- contact column2 -->                    	
+                        <p>Thomas Bennett<br />
+                           P.O. Box 128042 Nashville, TN 37212 <br />
+                           615.812.9498 / <a href="mailto:thomas.g.bennett@gmail.com">thomas.g.bennett@gmail.com</a>
+                        </p>
                        	<div id="map-shadow">
                        		<div id="map">
                              <iframe width="423" height="302" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?hl=en&amp;q=P.O.+Box+128042+Nashville,+TN+37212&amp;ie=UTF8&amp;hq=&amp;hnear=Nashville,+Tennessee+37212&amp;gl=us&amp;t=m&amp;z=13&amp;vpsrc=0&amp;ll=36.128163,-86.796924&amp;output=embed"></iframe> 

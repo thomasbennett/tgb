@@ -12,7 +12,7 @@
                     	<div class="post-info">
                         	<div class="left-info">
                             <h4 class="minih5"><a href="<?php the_permalink();?>"><?php the_title();?></a></h4>
-                            <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/author-icon.jpg" alt="" class="post-icon" /><?php the_author_posts_link();?></span>
+                            <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/author-icon.jpg" alt="" class="post-icon" />Thomas</span>
                             <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/comment-icon.jpg" alt="" class="post-icon" /><?php comments_popup_link(__('0 Comments','onixus'),__('1 Comment','onixus'),__('% Comments','onixus'));?></span>
                           </div>
                           <div class="right-info">
