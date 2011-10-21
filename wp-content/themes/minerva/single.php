@@ -9,12 +9,9 @@
                     <div class="blog-post">
                     	<div class="post-info">
                       	<div class="left-info">
-                          <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/author-icon.jpg" alt="" class="post-icon" /><?php the_author_posts_link();?></span>
-                          <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/comment-icon.jpg" alt="" class="post-icon" /><?php comments_popup_link(__('0 Comment','onixus'),__('1 Comment','onixus'),__('% Comments','onixus'));?></span>
+                          <h4 class="minih5"><?php the_title();?></h4>
+                          <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/comment-icon.jpg" alt="" class="post-icon" /><?php comments_popup_link(__('0 Comments','onixus'),__('1 Comment','onixus'),__('% Comments','onixus'));?></span>
                           <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/category-icon.jpg" alt="" class="post-icon" /><?php the_category(',');?></span>
-                          <?php if (has_tag()) { ?>
-                              <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/tag.png" alt="" class="post-icon" /><?php the_tags();?></span>
-                            <?php } ?>
                         </div>
                         <div class="right-info">
                         	<?php the_time('M'); ?><br/><?php the_time('d'); ?>
@@ -22,11 +19,12 @@
                       </div>
                       <div class="post-content">
                         <?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>
-                          <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=142&amp;w=464&amp;zc=1" alt="" />
+                          <?php $alt = get_post_meta($attachment_id, '_wp_attachment_image_alt', true); ?>
+                          
+                          <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=240&amp;w=464&amp;zc=1&amp;a=t" class="light-border heading-image" alt="<?php the_title(); ?>" />
                         <?php } else {?>
-                          <img src="<?php echo get_template_directory_uri();?>/images/nothumbnail.jpg" alt="" />
+                          <img src="<?php echo get_template_directory_uri();?>/images/nothumbnail.jpg" alt="No image displayed." />
                         <?php } ?>
-                        <h4><?php the_title();?></h4>
                         <?php the_content();?>                                
                       </div>
                       <?php $disable_social_bookmark = get_option('minerva_disable_social_bookmark');?>

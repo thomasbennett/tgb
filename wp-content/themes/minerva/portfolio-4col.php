@@ -54,7 +54,7 @@ Template Name: Portfolio 4 Cols
                         </div>
 					              <div class="pf-image-four">
                         	<?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>
-                          <a href="<?php echo ($pf_link) ? $pf_link : thumb_url();?>" rel="prettyPhoto"><img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=209&amp;w=217&amp;zc=1" alt=""/></a>
+                          <a href="/<?php echo $post->post_name; ?>"><img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=209&amp;w=217&amp;zc=1" alt="<?php the_title(); ?>" class="light-border" /></a>
                           <?php } ?>              
                         </div>
                       </li>

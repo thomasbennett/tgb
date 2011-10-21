@@ -18,33 +18,31 @@ Template Name: Blog Template
                     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                     
                     $blog_order = get_option('minerva_blog_order') ?  get_option('minerva_blog_order')  : "date";
-                    $blog_items_num = get_option('minerva_blog_items_num') ? get_option('minerva_blog_items_num') : 3;
+                    $blog_items_num = get_option('minerva_blog_items_num') ? get_option('minerva_blog_items_num') : 5;
                     
-                    query_posts(array('cat'=>$blog_include,'showposts'=>$blog_items_num,'orderby'=>$blog_order,'order'=>'DESC','paged'=>$paged));
+                    query_posts(array('cat'=>$blog_include,'posts_per_page'=>$blog_items_num,'orderby'=>$blog_order,'order'=>'DESC','paged'=>$paged));
                     
                     while ( have_posts() ) : the_post();
                   	?>                     	                  
                     <div class="blog-post">
                     	<div class="post-info">
                         	<div class="left-info">
-                            <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/author-icon.jpg" alt="" class="post-icon" /><?php the_author_posts_link();?></span>
-                            <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/comment-icon.jpg" alt="" class="post-icon" /><?php comments_popup_link(__('0 Comment','onixus'),__('1 Comment','onixus'),__('% Comments','onixus'));?></span>
+                            <h4 class="minih5"><a href="<?php the_permalink();?>"><?php the_title();?></a></h4>
+                            <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/comment-icon.jpg" alt="" class="post-icon" /><?php comments_popup_link(__('0 Comments','onixus'),__('1 Comment','onixus'),__('% Comments','onixus'));?></span>
                             <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/category-icon.jpg" alt="" class="post-icon" /><?php the_category(',');?></span>
-                            <?php if (has_tag()) { ?>
-                              <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/tag.png" alt="" class="post-icon" /><?php the_tags();?></span>
-                            <?php } ?>
                           </div>
                           <div class="right-info">
                           	<?php the_time('M'); ?><br/><?php the_time('d'); ?>
                           </div>
                         </div>
                         <div class="post-content  <?php post_class(); ?>" <?php if ( ! isset( $content_width ) ) $content_width = '';?>>
+                          <a href="<?php the_permalink(); ?>">
                           <?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>
-                            <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=142&amp;w=464&amp;zc=1" alt="" />
+                            <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=240&amp;w=464&amp;zc=1&amp;a=t" alt="<?php the_title(); ?>" class="light-border" />
                           <?php } else {?>
-                            <img src="<?php echo get_template_directory_uri();?>/images/nothumbnail.jpg" alt="" />
+                            <img src="<?php echo get_template_directory_uri();?>/images/nothumbnail.jpg" alt="No thumbnail displayed." />
                           <?php } ?>
-                          <h4><a href="<?php the_permalink();?>"><?php the_title();?></a></h4>
+                          </a>
                           <?php the_excerpt();?>                                
                         </div>
                     </div>

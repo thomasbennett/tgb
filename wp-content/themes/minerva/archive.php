@@ -4,29 +4,29 @@
             <div id="content">
             	<div class="maincontent-blog">  
                   <div id="content-left">
+                    <h2><?php the_category(); ?></h2>
                   <?php
                     while ( have_posts() ) : the_post();
                   	?>                     	                  
                     <div class="blog-post">
                     	<div class="post-info">
                         	<div class="left-info">
+                            <h4 class="minih5"><a href="<?php the_permalink();?>"><?php the_title();?></a></h4>
                             <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/author-icon.jpg" alt="" class="post-icon" /><?php the_author_posts_link();?></span>
-                            <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/comment-icon.jpg" alt="" class="post-icon" /><?php comments_popup_link(__('0 Comment','onixus'),__('1 Comment','onixus'),__('% Comments','onixus'));?></span>
-                            <?php if (has_tag()) { ?>
-                              <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/tag.png" alt="" class="post-icon" /><?php the_tags();?></span>
-                            <?php } ?>
+                            <span class="post-row"><img src="<?php echo get_template_directory_uri();?>/images/comment-icon.jpg" alt="" class="post-icon" /><?php comments_popup_link(__('0 Comments','onixus'),__('1 Comment','onixus'),__('% Comments','onixus'));?></span>
                           </div>
                           <div class="right-info">
                           	<?php the_time('M'); ?><br/><?php the_time('d'); ?>
                           </div>
                         </div>
                         <div class="post-content">
+                          <a href="<?php the_permalink(); ?>">
                           <?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>
-                            <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=142&amp;w=464&amp;zc=1" alt="" />
+                            <img src="<?php echo get_template_directory_uri();?>/timthumb.php?src=<?php echo thumb_url();?>&amp;h=240&amp;w=464&amp;zc=1&amp;a=t" alt="<?php the_title() ?>" class="light-border" />
                           <?php } else {?>
                             <img src="<?php echo get_template_directory_uri();?>/images/nothumbnail.jpg" alt="" />
                           <?php } ?>
-                          <h4><a href="<?php the_permalink();?>"><?php the_title();?></a></h4>
+                          </a>
                           <?php the_excerpt();?>                                
                         </div>
                     </div>

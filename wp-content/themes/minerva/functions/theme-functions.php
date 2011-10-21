@@ -7,7 +7,7 @@ function excerpt($excerpt_length) {
 	$words = explode(' ', $content, $excerpt_length + 1);
 	if(count($words) > $excerpt_length) :
 		array_pop($words);
-		array_push($words, '...');
+		array_push($words, '<a href="'.the_permalink().'">read more</a>');
 		$content = implode(' ', $words);
 	endif;
   
@@ -27,7 +27,7 @@ function minerva_excerpt($length, $ellipsis) {
 	return $text;
 }
 
-function minerva_truncate($string, $limit, $break=".", $pad="...") {
+function minerva_truncate($string, $limit, $break=".", $pad="read more") {
 	if(strlen($string) <= $limit) return $string;
 	
 	 if(false !== ($breakpoint = strpos($string, $break, $limit))) {
@@ -463,11 +463,6 @@ function minerva_social_bookmarks() { ?>
       <ul>
           <li><a title="Click to Tweet This!" href="http://twitter.com/home?status<?php echo urlencode(get_permalink($post->ID)); ?>" class="twitter">Tweet This</a></li>
           <li><a title="Share on Facebook" href="http://www.facebook.com/share.php?u<?php echo urlencode(get_permalink($post->ID)); ?>" class="facebook">Share on Facebook</a></li>
-          <li><a title="Digg This" href="http://digg.com/submit?phase=2&amp;amp;url=<?php the_permalink() ?>&amp;amp;title=<?php echo urlencode(the_title('','', false)) ?>" class="digg">Digg This</a></li>
-          <li><a title="Stumble This" href="http://stumbleupon.com/submit?url=<?php the_permalink() ?>&amp;amp;title=<?php echo urlencode(the_title('','', false)) ?>" class="stumbleupon">Stumble This</a></li>
-          <li><a title="Bookmark on Delicious" href="http://del.icio.us/post?url=<?php the_permalink() ?>&amp;amp;title=<?php echo urlencode(the_title('','', false)) ?>" class="delicious">Bookmark on Delicious</a></li>
-          <li><a title="Bookmark on Reddit!" href="http://reddit.com/submit?url=<?php the_permalink() ?>&amp;amp;title=<?php echo urlencode(the_title('','', false)) ?>" class="reddit">Bookmark on Reddit!</a></li>
-          <li><a title="Float This!" href="http://designfloat.com/submit.php?url=<?php the_permalink() ?>&amp;amp;title=<?php echo urlencode(the_title('','', false)) ?>" class="designfloat">Float This</a></li>
       </ul>
     </div>
   </div>
@@ -587,7 +582,7 @@ function minerva_clientlist($cat,$num=5,$title="") {
 	<ul class="client-list">
   
   <?php
-    query_posts('cat='.$cat.'&showposts='.$num);
+    query_posts('cat='.$cat.'&posts_per_page='.$num);
     while ( have_posts() ) : the_post();
     $image_thumbnail = get_post_meta($post->ID, '_image_thumbnail', true );
     ?>

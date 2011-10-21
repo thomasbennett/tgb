@@ -242,12 +242,13 @@ blockquote{
 .center{text-align:center; margin-bottom:10px;}
 
 /* heading */
-h1{font-family:Georgia, Tahoma;font-size:34px;color:#222;margin-bottom:15px;line-height:26px;font-weight:normal;}
-h2{font-family:Georgia, Tahoma;font-size:28px;color:#222;margin-bottom:15px;line-height:24px;font-weight:normal;}
-h3{font-family:Georgia, Tahoma;font-size:24px;color:#222;margin-bottom:15px;line-height:20px;font-weight:normal;}
-h4{font-family:Georgia, Tahoma;font-size:18px;color:#222;margin-bottom:15px;line-height:18px;font-weight:normal;}
-h5{font-family:Georgia, Tahoma;font-size:16px;color:#222;margin-bottom:15px;line-height:16px;font-weight:normal;}
-h6{font-family:Georgia, Tahoma;font-size:14px;color:#222;margin-bottom:15px;line-height:16px;font-weight:normal;}
+h1,h2,h3,h4,h5,h6 {font-family:'Gill Sans', 'Trebuchet MS', Calibri, sans-serif;color:#222;margin-bottom:15px;line-height:16px;font-weight:normal; } 
+h1{font-size:32px;}
+h2{font-size:26px;}
+h3{font-size:22px;}
+h4{font-size:16px;}
+h5{font-size:16px;}
+h6{font-size:14px;}
 
 /* text styled */
 .boldtext-medium{font-size:12px; font-weight:bold; color:#c6c6c6}
@@ -490,6 +491,7 @@ small{font-size:11px;}
 }
 #mainmenu ul li a, #mainmenu ul li a:visited {
 	color:#666;
+  font-family: 'Gill Sans', 'Trebuchet MS', Calibri, sans-serif;
 	text-decoration:none;
 	width:105px;
 }
@@ -633,7 +635,7 @@ ul#slideshow li {
 }
 .slide-type2 h1{
 	float:left;
-	margin:48px 0px 2px 52px;
+	margin:48px 0px 15px 52px;
 }
 .slide-type2 h3{
 	float:left;
@@ -791,9 +793,9 @@ h1.slide-big{
 }
 
 /* Normal Button Styling */
-.button {
+a.button {
     background: transparent url('images/bg_button_a.gif') no-repeat scroll top right;
-    color: #222222;
+    color: #222;
     display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -803,18 +805,18 @@ h1.slide-big{
     text-decoration: none;
 }
 
-.button:hover {
+a.button:hover {
   color: #666;
 }
-.button span {
+a.button span {
     background: transparent url('images/bg_button_span.gif') no-repeat;
     display: block;
     line-height: 17px;
     padding: 6px 0 6px 18px;
 } 
-.button:active {
+a.button:active {
     background-position: bottom right;
-    color: #222222;
+    color: #222;
     outline: none; /* hide dotted outline in Firefox */
 }
 
@@ -1581,19 +1583,21 @@ ul.process-list li{
 
 /* Pricing Table */
 .pricing-box{
-	width:197px;
-	margin:0px 11px 30px 11px;
-	padding:9px 9px 4px 9px;
 	background-color:#f0efef;
 	border:1px solid #d6d5d5;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 	float:left;
+	margin:0px 11px 30px 11px;
+  min-height: 465px;
+	padding:9px 9px 4px 9px;
+	width:197px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 .pricing-box h2{
-	text-align:center;
+  line-height: 1em;
 	margin:2px 0px 0px 0px;
+	text-align:center;
 }
 .pricing-desc{
 	text-align:center;
@@ -2557,7 +2561,7 @@ ul#portfolio-list-four li{
 }
 .pf-desc-four h5{
 	width:180px;
-	margin:14px 0px 8px 19px;
+	margin:8px;
 	float:left;
 }
 .pf-desc-four p{
@@ -2595,7 +2599,7 @@ ul#portfolio-list-three li{
 }
 .pf-desc-three h5{
 	width:180px;
-	margin:14px 0px 8px 19px;
+	margin:8px;
 	float:left;
 }
 .pf-desc-three p{
@@ -2652,9 +2656,9 @@ ul#portfolio-list-two li,
   background:none;  
 }
 .pf-desc-two h5{
-	width:150px;
-	margin:35px 0px 8px 19px;
 	float:left;
+	margin:10px;
+	width:150px;
 }
 .pf-desc-two p{
 	width:258px;
@@ -2791,13 +2795,13 @@ ul.social-list-alt li{
 
 }
 #contactFormArea{
-	width:476px;
+	width:460px;
 	background-color:#dbdbdb;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 	margin:0px 0px 40px 0px;
-	padding:20px 0px 29px 31px;
+	padding:15px 0px 15px 15px;
 	float:left;
 }
 #contactFormArea-alt{
@@ -2882,6 +2886,9 @@ fieldset{
 	display: inline-block;
 	float:left;
 }
+.input-submit:hover {
+  background: #999;
+}
 .textarea{
 	border-top:1px solid #cccbcb;
 	border-right:1px solid #cccbcb;
@@ -2958,4 +2965,19 @@ fieldset{
   font-size: 1.4em;
   line-height: 1.6em;
   width: 600px;
+}
+
+.light-border {
+  border: 1px solid #ddd;
+}
+
+.minih5 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.minih5 a { color: #222; }
+
+.heading-image {
+  margin-bottom: 20px;
 }
