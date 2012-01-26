@@ -1,0 +1,75 @@
+A { color:#006699; text-decoration: none; }
+A:hover { color:#DB8606; text-decoration: none; }
+
+td {
+	FONT-FAMILY: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	color: #3E3E3E;
+	text-decoration: none;
+	border: none;
+}
+
+.inputsubmit {  
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 11px; 
+	background-color: #DB8606; 
+	color: #FFFFFF;
+	border: #666666; 
+	border-style: solid;
+ 	border-top-width: 1px; 
+	border-right-width: 1px; 
+	border-bottom-width: 1px; 
+	border-left-width: 1px
+}
+
+.inputsubmit2 {  
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 11px; 
+	background-color: #FFFFFF; 
+	color: #006699;
+	border: #FFFFFF; 
+	border-style: solid;
+ 	border-top-width: 1px; 
+	border-right-width: 1px; 
+	border-bottom-width: 1px; 
+	border-left-width: 1px
+}
+
+.barTxt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #666666;
+	text-decoration: none;
+	border: none;
+}
+
+.error {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FF0000;
+	text-decoration: none;
+	border: none;
+	font-weight: bold;
+}
+
+textarea { width: 100%; }
+.mainTable { background-color: #F4FAFF; }
+.mainTableAlt { background-color: #FFFFFF; }
+.mainTableOn { background-color: #FFFFF0; }
+.TableHeader { background-color: #E9E9E9; }
+.TableMsg { background-color: #ADADAD; }
+.TableHeaderText { color: #FFFFFF; font-size: 11px; font-weight: none; }
+.TableInfoText { color: #000000; font-size: 11px; background-color: #FFFFFF; }
+.priLow { background-color: #DDFFDD; }
+.priNormal { background-color: #FFFFF0; }
+.priHigh { background-color: #FEE7E7; }
+.privReceived { background-color: #3669CF; color: #3E3E3E; }
+.privBox { background-color: #FFFFFF; }
+.privBorder { background-color: Black; }
+.privAttachments { background-color: #94C7FF; }
+.msgReceived { background-color: #E9E9E9; color: #3E3E3E; font-size: 10px; }
+.msgAnswered { background-color: #FFE0B3; color: #3E3E3E; font-size: 10px; }
+.msgAttachments { background-color: #F4FAFF; color: #000000; font-size: 10px; }
+.msgBorder { background-color: #ADADAD; }
+.msgBorderInfo { background-color: #ffffff; }
+.msgBox { background-color: #F9F9F9; }

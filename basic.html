@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+  <script>
+    jQuery(function($){
+      $('#test').click(function(){
+        alert('test');
+        return false;
+      });
+    });
+  </script>
+
+  <input type="button" value="click to fire" id="test" />
+</body>
+</html>
