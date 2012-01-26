@@ -29,19 +29,19 @@ function wds_seomoz_urlmetrics_box($post) {
 		</tr>
 		<tr>
 			<th><?php _e( 'External Links' , 'wds'); ?></th>
-			<td><p><a href="http://www.opensiteexplorer.org/<?php echo $page; ?>/a" target="_blank"><?php echo $urlmetrics->ueid; ?></a></p></td>
+			<td><p><a href="http://www.opensiteexplorer.org/links?site=<?php echo $page; ?>" target="_blank"><?php echo $urlmetrics->ueid; ?></a></p></td>
 		</tr>
 		<tr>
 			<th><?php _e( 'Links' , 'wds'); ?></th>
-			<td><p><a href="http://www.opensiteexplorer.org/<?php echo $page; ?>/a" target="_blank"><?php echo $urlmetrics->uid; ?></a></p></td>
+			<td><p><a href="http://www.opensiteexplorer.org/links?site=<?php echo $page; ?>" target="_blank"><?php echo $urlmetrics->uid; ?></a></p></td>
 		</tr>
 		<tr>
 			<th><?php _e( 'mozRank' , 'wds'); ?></th>
-			<td><p><?php echo '<b>' . __( '10-point score:' , 'wds') . '</b> <a href="http://www.opensiteexplorer.org/' . $page . '/a" target="_blank">' . $urlmetrics->umrp . '</a><br /><br /><b>' . __( 'Raw score:' , 'wds') . '</b> <a href="http://www.opensiteexplorer.org/' . $page . '/a" target="_blank">' . $urlmetrics->umrr; ?></a></p></td>
+			<td><p><?php echo '<b>' . __( '10-point score:' , 'wds') . '</b> <a href="http://www.opensiteexplorer.org/links?site=' . $page . '" target="_blank">' . $urlmetrics->umrp . '</a><br /><br /><b>' . __( 'Raw score:' , 'wds') . '</b> <a href="http://www.opensiteexplorer.org/links?site=' . $page . '" target="_blank">' . $urlmetrics->umrr; ?></a></p></td>
 		</tr>
 		<tr>
 			<th><?php _e( 'Page Authority' , 'wds'); ?></th>
-			<td><p><a href="http://www.opensiteexplorer.org/<?php echo $page; ?>/a" target="_blank"><?php echo $urlmetrics->upa; ?></a></p></td>
+			<td><p><a href="http://www.opensiteexplorer.org/links?site=<?php echo $page; ?>" target="_blank"><?php echo $urlmetrics->upa; ?></a></p></td>
 		</tr>
 	</tbody>
 </table>

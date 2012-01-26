@@ -242,7 +242,7 @@ blockquote{
 .center{text-align:center; margin-bottom:10px;}
 
 /* heading */
-h1,h2,h3,h4,h5,h6 {font-family:'Gill Sans', 'Trebuchet MS', Calibri, sans-serif;color:#222;margin-bottom:15px;line-height:16px;font-weight:normal; } 
+h1,h2,h3,h4,h5,h6 {font-family:'Gill Sans', 'Trebuchet MS', Calibri, sans-serif;color:#222;margin-bottom:15px;font-weight:normal; } 
 h1{font-size:32px;}
 h2{font-size:26px;}
 h3{font-size:22px;}
@@ -320,13 +320,13 @@ small{font-size:11px;}
 	float:left;
 }
 #slogan{
-	width:196px;
+	width:134px;
 	height:62px;
 	margin-top:13px;
 	padding:24px 0px 0px 23px;	
 	border-left:1px solid #d5d5d5;
 	font-size:11px;
-	color:#a8a8a8;
+	color:#666;
 	float:left;
 }
 #s-container{
@@ -1167,11 +1167,39 @@ ul.client-list li{
 }
 .footer-top{
 	width:960px;
-	height:86px;	
+	height:56px;	
 }
+.footer-top h3 { 
+  float: left;
+  height: 20px; 
+  margin-top: 20px;
+  margin-right: 50px;
+}
+#news {
+  height: 20px;
+  float: left;
+  margin-top: 22px;
+  overflow: hidden;
+  width: 700px;
+}
+#news h4 {
+  display: inline-block;
+  float: left;
+  margin-bottom: 5px; 
+  margin-right: 5px;
+}
+#news h4::after {
+  content: ' - '
+}
+#news h4 a { color: #222; }
 .footer-bottom-left{
 	width:500px;
 	float:left;
+}
+.view-all-news { 
+  color: #222 !important; 
+  margin-top: 22px; 
+  display: inline-block;
 }
 .footer-bottom-right{
 	width:460px;
@@ -2608,7 +2636,7 @@ ul#portfolio-list-three li{
 	float:left;
 }
 .pf-image-three{
-	height:224px;
+	height:474px;
 	background-image:url(images/pf-shadow2.png);
 	background-repeat:no-repeat;
 	background-position:bottom center;
@@ -2630,22 +2658,24 @@ ul#portfolio-list-two,
 }
 #portfolio-detail{
   margin-left: 15px; 
+  min-height: 500px;
 }
 ul#portfolio-list-two li, 
 .portfolio-text {
-	width:465px; 
+	width:445px; 
 	display:block; 
 	float:left;
-	margin:0px 15px 38px 15px; 
+	margin:0px 15px 38px 45px; 
 	overflow:hidden; 
 }
 .pf-desc-two,
 .pf-detail-text,
 .portfolio-summary {
 	width:465px;
-	font-size:11px;
+	font-size:1.2em;
 	background-color:#dbdbdb;
 	float:left;
+  line-height: 1.6em;
 }
 .portfolio-summary {
   background: none;
@@ -2677,8 +2707,8 @@ ul#portfolio-list-two li,
 /* CONTACT
 ------------------------------------------------------*/
 .contact-column1{
-	width:507px;
-	margin-right:30px;
+	width:480px;
+	margin-right:50px;
 	float:left;
 }
 .contact-column1-alt{
@@ -2981,3 +3011,4 @@ fieldset{
 .heading-image {
   margin-bottom: 20px;
 }
+

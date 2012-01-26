@@ -9,6 +9,7 @@
   } else { wp_title('',true); }?></title>
   <meta name="robots" content="follow, all" />
   <meta name="keywords" content="affordable web design, best web design, corporate web design, creative web design, dynamic web design, freelance web designer, nashville web design, nashville web designer, nashville web development, nashville web hosting, professional web design, small business web design, web design firms, web design nashville, web design nashville tn, web design pricing, web design rates, web designer, web designer nashville" />
+  <meta name="google-site-verification" content="HFav62C1SHzF6PfHmh6pW4yjz4oxzI9FeBzEw42W8tM" />
   <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
   <?php $favico = get_option('minerva_custom_favicon');?>
   <link rel="shortcut icon" href="<?php echo ($favico) ? $favico : get_template_directory_uri().'/images/favicon.ico';?>"/>
@@ -81,10 +82,10 @@
             
             	<div id="left-header">
                 	<!-- begin of logo and mainmenu -->
-                	<div id="logo">
+                	<h1 id="logo">
                     <?php $logo = get_option('minerva_logo'); ?>
                     <a href="<?php echo home_url();?>"><img src="<?php echo ($logo) ? $logo : get_template_directory_uri().'/images/logo.jpg';?>" alt=""/></a>                    
-                  </div>
+                  </h1>
                   <div id="slogan">
                     <?php $site_slogan = get_option('minerva_site_slogan');?>
                     <?php echo $site_slogan ? $site_slogan : "Lorem Ipsum Dolor Amet Consectetur<br/>Adipisicing Elit, Sed Do Eiusmod Tempor";?>
@@ -119,4 +120,3 @@
                 
             </div>
             <!-- END OF HEADER -->
-            

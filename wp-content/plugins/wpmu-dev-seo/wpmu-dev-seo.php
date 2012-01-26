@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: WPMU DEV SEO
+Plugin Name: Infinite SEO
 Plugin URI: http://premium.wpmudev.org/
 Description: Every SEO option that a site requires, in one easy bundle.
-Version: 1.2.1
+Version: 1.3.6
 Network: true
 Text Domain: wds
 Author: Ulrich Sossou (Incsub)
@@ -42,11 +42,19 @@ if (!defined('WDS_SITEWIDE'))
 if (!defined('WDS_SITEMAP_POST_LIMIT'))
 	define( 'WDS_SITEMAP_POST_LIMIT', 1000 );
 
+//you can override this in wp-config.php to enable more BuddyPress groups in the sitemap, but you may need alot of memory
+if (!defined('WDS_BP_GROUPS_LIMIT'))
+	define( 'WDS_BP_GROUPS_LIMIT', 200 );
+
+//you can override this in wp-config.php to enable more BuddyPress profiles in the sitemap, but you may need alot of memory
+if (!defined('WDS_BP_PROFILES_LIMIT'))
+	define( 'WDS_BP_PROFILES_LIMIT', 200 );
+
 // You can override this value in wp-config.php to allow more or less time for caching SEOmoz results
 if (!defined('WDS_EXPIRE_TRANSIENT_TIMEOUT'))
 define('WDS_EXPIRE_TRANSIENT_TIMEOUT', 3600);
 
-define( 'WDS_VERSION', '1.2.1' );
+define( 'WDS_VERSION', '1.3.5' );
 
 /**
  * Setup plugin path and url.
@@ -59,9 +67,9 @@ define( 'WDS_PLUGIN_URL', plugin_dir_url( __FILE__ ) . 'wds-files/' );
  * Load textdomain.
  */
 if ( defined( 'WPMU_PLUGIN_DIR' ) && file_exists( WPMU_PLUGIN_DIR . '/wpmu-dev-seo.php' ) ) {
-	load_muplugin_textdomain( 'wds', 'wds-files/languages' );
+	load_muplugin_textdomain( 'wds', dirname(plugin_basename(__FILE__)) . '/wds-files/languages' );
 } else {
-	load_plugin_textdomain( 'wds', false, WDS_PLUGIN_DIR . 'wds-files/languages' );
+	load_plugin_textdomain( 'wds', false, dirname(plugin_basename(__FILE__)) . '/wds-files/languages' );
 }
 
 require_once ( WDS_PLUGIN_DIR . 'wds-core/wds-core-wpabstraction.php' );
@@ -76,6 +84,10 @@ if ( is_admin() ) {
 	require_once ( WDS_PLUGIN_DIR . 'wds-seomoz/wds-seomoz-settings.php' );
 	require_once ( WDS_PLUGIN_DIR . 'wds-sitemaps/wds-sitemaps-settings.php' );
 	require_once ( WDS_PLUGIN_DIR . 'wds-onpage/wds-onpage-settings.php' );
+
+	if (@$wds_options['sitemap-dashboard-widget']) {
+		require_once ( WDS_PLUGIN_DIR . 'wds-sitemaps/wds-sitemaps-dashboard-widget.php' );
+	}
 
 	if( isset( $wds_options['seomoz'] ) && $wds_options['seomoz'] == 'on' ) { // Changed '=' to '=='
 		require_once ( WDS_PLUGIN_DIR . 'wds-seomoz/wds-seomoz-results.php' );

@@ -1,0 +1,20 @@
+#main { width: 540px; float: left }
+#sidebar { width: 220px; float: right }
+
+div.slide img { border: 0 !important }
+div.slide { width: 820px; height: 300px }
+
+div.slide h1 { font-size: 2.6em; border-bottom: 1px solid #999; padding-bottom: 10px }
+div.slide p { font-size: 2em }
+
+#content img { border: 2px solid #d9d9d9 }
+
+#cycler { width: 820px; overflow: hidden; height: 380px }
+ul#pager { position: absolute; bottom: 0px; height: 40px; background: url('../images/pager.png') repeat; width: 100%; left: 0 }	
+	#pager ul { margin-left: 25px }
+	#pager li { margin-right: 15px; padding: 14px; margin-right: 50px; font-size: 1.1em; }
+.activeSlide { text-decoration: underline }
+
+#prev, #next { position: absolute; top: 150px; width: 23px; height: 38px }
+#prev { background: url('../images/prev.png') no-repeat; left: 0 }
+#next { background: url('../images/next.png') no-repeat; right: 0 }

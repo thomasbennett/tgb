@@ -48,7 +48,7 @@ function wds_seomoz_settings() {
 		$urlmetrics = $seomozapi->urlmetrics( $target_url );
 
 		$attribution = str_replace( '/', '%252F', untrailingslashit( $target_url ) );
-		$attribution = "http://www.opensiteexplorer.org/$attribution/a";
+		$attribution = "http://www.opensiteexplorer.org/links?site={$attribution}";
 
 		$additional = is_object( $urlmetrics ) ? '
 <h3>' . __( 'Domain Metrics' , 'wds') . '</h3>

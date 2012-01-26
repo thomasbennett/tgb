@@ -49,8 +49,7 @@ Template Name: Portfolio 4 Cols
                       ?>            
                       <li class="<?php echo $cat_slug;?>">
                         <div class="pf-desc-four">
-                        <h5><a href="<?php the_permalink();?>"><?php the_title();?></a></h5>
-                          <?php the_excerpt();?>
+                          <h5><a href="<?php the_permalink();?>"><?php the_title();?></a></h5>
                         </div>
 					              <div class="pf-image-four">
                         	<?php if (function_exists('has_post_thumbnail') && has_post_thumbnail()) {?>

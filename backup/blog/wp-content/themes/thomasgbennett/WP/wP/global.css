@@ -1,0 +1,109 @@
+body { 
+    background: #dcdcd4 url('../images/background.jpg') repeat; 
+    font-size: 62.5%; 
+    font-family: lucida grande, helvetica; 
+    color: #303030
+}
+
+a { 
+	color: #092238;
+	font-size: 1.15em;
+	text-decoration: none
+}
+a:hover { text-decoration: underline }
+a, a img, img { border: 0; outline: none }
+
+h1 {
+    color: #092238;
+    width: 458px;
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+p { font-size: 1.3em; line-height: 1.8em }
+
+form { float: left; margin-bottom: 20px }
+input { border: 1px solid #d4d4d4; height: 40px; width: 220px; margin-right: 20px; padding-left: 10px }
+input.submit { width: 40px; height: 40px; margin-right: 0px; padding-left: 0px }
+
+ul.inline li { display: inline-block; float: left }
+
+.left { float: left }
+.right { float: right }
+.center { margin: 0 auto; width: 960px }
+
+.centered { text-align: center }
+
+.clear { clear: both }
+
+/*(( TEMPLATE ))*/
+
+#wrapper {
+    background: #f3f3f3;
+	margin: 0 auto;
+	width: 940px;
+    border-right: 1px solid #9d9d9d;
+    border-left: 1px solid #9d9d9d;
+    padding: 0px 10px;
+}
+
+#container { 
+    padding: 25px 45px;
+    border-right: 1px solid #d4d4d4;
+    border-left: 1px solid #d4d4d4;
+}
+
+#top {
+    float: left;
+    height: 200px;
+    width: 850px;
+}
+
+#logo { 
+    background: url('../images/logo.jpg') no-repeat;
+    position: absolute;
+    width: 265px;
+    height: 145px;
+    left: 50%;
+    top: 25px;
+    margin-left: -420px;
+    text-indent: -9999px;
+    z-index: 2
+}
+
+#heading { 
+    background: url('../images/hairline.jpg') bottom right no-repeat;
+    float: right;
+    width: 541px;
+    height: 92px;
+    margin-top: 25px;
+    text-align: right;
+    clear: both;
+}
+
+#heading h1 { 
+    width: 540px;
+    font-size: 4.45em;
+    margin-bottom: 5px;
+    padding-bottom: 0px;
+    border: 0px;
+}
+
+#heading h2 { font-size: 1.3em }
+
+ul#navContainer { width: 634px; height: 30px; margin-top: 17px; float: right;  }
+    ul#navContainer li { margin-left: 54px; text-transform: lowercase }
+    ul#navContainer li a { color: #092238; font-size: 1.6em;  }
+        ul#navContainer li a:hover { border-bottom: 1px solid #9c9c9c; padding-bottom: 5px; text-decoration: none }
+
+#footer { 
+    margin-top: 10px;
+    border-top: 1px solid #d4d4d4;
+    padding: 20px 0;
+}
+
+#copyright { float: left; width: 400px }
+ul#site-map { float: right; width: 268px; margin-top: 5px;}
+ul#site-map li { margin-left: 2px; font-size: .95em !important; }

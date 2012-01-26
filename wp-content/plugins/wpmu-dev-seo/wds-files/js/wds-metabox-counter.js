@@ -7,10 +7,10 @@ var __WDS_META_COUNT = 160;
 function checkTitleLength () {
 	var res = $('#wds_title').val().length;
 	if (res > __WDS_TITLE_COUNT) {
-		$('#wds_title').val( $('#wds_title').val().substr(0, __WDS_TITLE_COUNT) );
-		return false;
+		$('#wds_title_counter_result').html( '<span style="color:red">Over ' + __WDS_TITLE_COUNT + ' characters (' + res + ')</span>');
+	} else {
+		$('#wds_title_counter_result').html( (__WDS_TITLE_COUNT - res) + ' characters left');
 	}
-	$('#wds_title_counter_result').text( (__WDS_TITLE_COUNT - res) + ' characters left');
 }
 function checkMetaLength () {
 	var res = $('#wds_metadesc').val().length;

@@ -2,7 +2,7 @@
 /**
  * WDS_Core_Admin class can be used by any component. It helps build admin pages
  *
- * @package WPMU DEV SEO Core
+ * @package Infinite SEO Core
  */
 class WDS_Core_Admin {
 
@@ -177,7 +177,7 @@ class WDS_Core_Admin {
 
 		if ( $this->fields ) {
 			foreach ( $this->fields as $section_slug => $section ) {
-				add_settings_section( $section_slug, $section['title'], array( &$this, 'add_section_text' ), $slug );
+				add_settings_section( $section_slug, @$section['title'], array( &$this, 'add_section_text' ), $slug );
 				foreach ( $section['options'] as $option ) {
 					add_settings_field( $option['name'], $option['title'], array( &$this, "add_{$option['type']}_field" ),  $slug, $section_slug, $option );
 				}
@@ -211,11 +211,11 @@ class WDS_Core_Admin {
 		global $wds_page_hook, $wp_version;
 
 		if ( ! is_multisite() || (is_multisite() && !WDS_SITEWIDE)) {
-			$wds_page_hook = add_submenu_page( 'options-general.php', __( 'WPMU DEV SEO Wizard' , 'wds'), __( 'WPMU DEV SEO', 'wds' ), $this->capability, 'wds_wizard', array( &$this, 'options_page' ) );
+			$wds_page_hook = add_submenu_page( 'options-general.php', __( 'Infinite SEO Wizard' , 'wds'), __( 'Infinite SEO', 'wds' ), $this->capability, 'wds_wizard', array( &$this, 'options_page' ) );
 		} else if (is_multisite() && version_compare( $wp_version , '3.0.9', '>' ) ) {
-			$wds_page_hook = add_submenu_page( 'settings.php', __( 'WPMU DEV SEO Wizard' , 'wds'), __( 'WPMU DEV SEO', 'wds' ), $this->capability, 'wds_wizard', array( &$this, 'options_page' ) );
+			$wds_page_hook = add_submenu_page( 'settings.php', __( 'Infinite SEO Wizard' , 'wds'), __( 'Infinite SEO', 'wds' ), $this->capability, 'wds_wizard', array( &$this, 'options_page' ) );
 		} else if (is_multisite()) {
-			$wds_page_hook = add_submenu_page( 'ms-admin.php', __( 'WPMU DEV SEO Wizard' , 'wds'), __( 'WPMU DEV SEO', 'wds' ), $this->capability, 'wds_wizard', array( &$this, 'options_page' ) );
+			$wds_page_hook = add_submenu_page( 'ms-admin.php', __( 'Infinite SEO Wizard' , 'wds'), __( 'Infinite SEO', 'wds' ), $this->capability, 'wds_wizard', array( &$this, 'options_page' ) );
 		}
 
 		add_action( "admin_print_styles-$wds_page_hook", array( &$this, 'admin_styles' ) );
@@ -356,19 +356,19 @@ class WDS_Core_Admin_Tab extends WDS_Core_Admin {
 		}
 
 		$tabs = '';
-		$step_title = array( 0, 'Settings', 'Sitemaps', 'Title & Meta', 'SEOmoz', 'Automatic Links' );
+		$step_title = array( 0, __('Settings', 'wds'), __('Sitemaps', 'wds'), __('Title & Meta', 'wds'), __('SEOmoz', 'wds'), __('Automatic Links', 'wds') );
 		$blog_tabs = get_site_option('wds_blog_tabs');
 		$blog_tabs = is_array($blog_tabs) ? $blog_tabs : array();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			$active = wds_is_wizard_step( $i ) ? ' nav-tab-active' : '';
-			$tabs .= "<a href='admin.php?page=wds_wizard&step=$i' class='nav-tab$active' title='$step_title[$i]'>Step $i</a>";
+			$tabs .= "<a href='admin.php?page=wds_wizard&step=$i' class='wds_tab_item nav-tab$active' title='$step_title[$i]'>" . sprintf(__('Step %d: %s', 'wds'), $i, $step_title[$i]) . "</a>";
 		}
 
 		$action_url = admin_url( 'options.php' );
 
 		echo "<div class='wrap'>$msg
 			<div class='icon32' id='icon-options-general'><br></div>
-			<h2>" . __( 'WPMU DEV SEO Wizard', 'wds' ) . "</h2>
+			<h2>" . __( 'Infinite SEO Wizard', 'wds' ) . "</h2>
 			<h3 class='nav-tab-wrapper'>$tabs</h3>
 			<h2>$title</h2>";
 
@@ -379,7 +379,7 @@ class WDS_Core_Admin_Tab extends WDS_Core_Admin {
 			echo "$description
 				<form action='$action_url' method='post'>";
 				settings_fields( $options_name );
-				do_settings_sections( $slug );
+				@do_settings_sections( $slug );
 
 				if (is_multisite() && WDS_SITEWIDE == true) {
 					$checked_y = in_array($slug, $blog_tabs) ? 'checked="checked"' : '';
@@ -476,6 +476,6 @@ class WDS_Core_Admin_Tab extends WDS_Core_Admin {
 		$options = $this->options;
 		$options[$name] = isset( $options[$name] ) ? $options[$name] : '';
 
-		echo "{$text}<input id='$name' name='{$options_name}[{$name}]' size='$size' type='hidden'value='{$options[$name]}' />";
+		echo "{$text}<input id='$name' name='{$options_name}[{$name}]' type='hidden'value='{$options[$name]}' />";
 	}
 }

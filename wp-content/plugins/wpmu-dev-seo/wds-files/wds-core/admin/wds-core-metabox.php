@@ -9,9 +9,9 @@ class WDS_Metabox {
 		add_action('wpsc_rate_product', array(&$this, 'rebuild_sitemap'));
 
 		add_action('admin_menu', array(&$this, 'wds_create_meta_box'));
-		add_action('save_post', array(&$this, 'wds_save_postdata'));
 
-		add_action('save_post', array(&$this, 'update_video_meta'));
+		add_action('save_post', array(&$this, 'wds_save_postdata'));
+		//add_action('save_post', array(&$this, 'update_video_meta'));
 
 		add_filter('manage_page_posts_columns', array(&$this, 'wds_page_title_column_heading'), 10, 1);
 		add_filter('manage_post_posts_columns', array(&$this, 'wds_page_title_column_heading'), 10, 1);
@@ -106,7 +106,7 @@ class WDS_Metabox {
 	function wds_create_meta_box() {
 		$show = user_can_see_seo_metabox();
 		if ( function_exists('add_meta_box') ) {
-			$metabox_title = is_multisite() ? __( 'WPMU DEV SEO' , 'wds') : 'WPMU DEV SEO'; // Show branding for singular installs.
+			$metabox_title = is_multisite() ? __( 'Infinite SEO' , 'wds') : 'Infinite SEO'; // Show branding for singular installs.
 			foreach (get_post_types() as $posttype) {
 				if ($show) add_meta_box( 'wds-wds-meta-box', $metabox_title, array(&$this, 'wds_meta_boxes'), $posttype, 'normal', 'high' );
 			}
@@ -119,7 +119,7 @@ class WDS_Metabox {
 		global $post;
 		if (empty($post)) $post = get_post($post_id);
 
-		if ('page' == $_POST['post_type'] && !current_user_can('edit_page', $post_id)) return $post_id;
+		if ('page' == @$_POST['post_type'] && !current_user_can('edit_page', $post_id)) return $post_id;
 		else if (!current_user_can( 'edit_post', $post_id )) return $post_id;
 
 		foreach ($_POST as $key=>$value) {
@@ -134,12 +134,12 @@ class WDS_Metabox {
 		}
 
 		do_action('wds_saved_postdata');
-		$this->rebuild_sitemap();
+		//$this->rebuild_sitemap();
 	}
-
+/*
 	function update_video_meta($post_id, $post = null) {
 		global $wds_options;
-		if ( !$wds_options['enablexmlvideositemap'])
+		if ( !@$wds_options['enablexmlvideositemap'])
 			return;
 
 		if (!is_object($post))
@@ -151,7 +151,7 @@ class WDS_Metabox {
 			$wds_xml_base->update_video_meta($post);
 		}
 	}
-
+*/
 	function rebuild_sitemap() {
 		require_once WDS_PLUGIN_DIR.'/wds-sitemaps/wds-sitemaps.php';
 	}
@@ -208,7 +208,7 @@ class WDS_Metabox {
 
 	function show_title_row () {
 		$title = __('Title Tag' , 'wds');
-		$desc = __('70 characters maximum' , 'wds');
+		$desc = __('Up to 70 characters recommended' , 'wds');
 		$value = esc_html(wds_get_value('title'));
 		$field = "<input type='text' class='widefat' id='wds_title' name='wds_title' value='{$value}' class='wds' />";
 
@@ -323,15 +323,14 @@ class WDS_Metabox {
 
 	function show_sitemap_row () {
 		global $wds_options;
-		if (empty($wds_options['enablexmlsitemap']) || !@$wds_options['enablexmlsitemap']) return '';
 
 		$options = array(
-			"-" => __( 'Automatic prioritization' , 'wds'),
+			"" => __( 'Automatic prioritization' , 'wds'),
 			"1" => __( '1 - Highest priority' , 'wds'),
 			"0.9" => "0.9",
-			"0.8" => "0.8 - " . __( 'Default for first tier pages' , 'wds'),
+			"0.8" => "0.8 - " . __( 'High priority (root pages default)' , 'wds'),
 			"0.7" => "0.7",
-			"0.6" => "0.6 - " . __( 'Default for second tier pages and posts' , 'wds'),
+			"0.6" => "0.6 - " . __( 'Secondary priority (subpages default)' , 'wds'),
 			"0.5" => "0.5 - " . __( 'Medium priority' , 'wds'),
 			"0.4" => "0.4",
 			"0.3" => "0.3",
@@ -340,17 +339,17 @@ class WDS_Metabox {
 		);
 		$title = __('Sitemap Priority' , 'wds');
 		$desc = __('The priority given to this page in the XML sitemap.' , 'wds');
-		$value = wds_get_value('sitemap-prio');
+		$value = wds_get_value('sitemap-priority');
 
-		$field = "<select name='wds_sitemap-prio' id='wds_sitemap-prio'>";
+		$field = "<select name='wds_sitemap-priority' id='wds_sitemap-priority'>";
 		foreach ($options as $key=>$label) {
 			$field .= "<option value='{$key}' " . (($key==$value) ? 'selected="selected"' : '') . ">{$label}</option>";
 		}
 		$field .= '</select>';
 
 		return '<tr>' .
-			$this->field_title($title, 'wds_redirect') .
-			$this->field_content($field, $desc . var_export($value,1)) .
+			$this->field_title($title, 'wds_sitemap-priority') .
+			$this->field_content($field, $desc) .
 		'</tr>';
 	}
 

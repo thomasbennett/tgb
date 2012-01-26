@@ -6,9 +6,9 @@
  */
 
 /**
- * WPMU DEV SEO Auto Links class
+ * Infinite SEO Auto Links class
  *
- * @package WPMU DEV SEO
+ * @package Infinite SEO
  * @since 0.1
  */
 
@@ -49,6 +49,8 @@ class WPS_AutoLinks {
 		global $wpdb, $post;
 
 		$options = $this->settings;
+		$options['casesens'] = @$options['casesens'] ? $options['casesens'] : false;
+		$options['lpages'] = @$options['lpages'] ? $options['lpages'] : false;
 
 		$links = 0;
 
@@ -64,9 +66,9 @@ class WPS_AutoLinks {
 		}
 
 		if (!$mode) {
-			if ($post->post_type == 'post' && !$options['post'])
+			if ($post->post_type == 'post' && !@$options['post'])
 				return $text;
-			else if ($post->post_type == 'page' && !$options['page'])
+			else if ($post->post_type == 'page' && !@$options['page'])
 				return $text;
 
 			if ( ( $post->post_type == 'page' && empty( $options['pageself'] ) ) || ( $post->post_type == 'post' && empty( $options['pageself'] ) ) ) {
@@ -167,6 +169,7 @@ class WPS_AutoLinks {
 					if( !empty( $options['customkey_preventduplicatelink'] ) )
 						$name = str_replace(',','|',$name);
 
+					$maxsingle = ( !empty( $options['customkey_preventduplicatelink'] )) ? 1 : $maxsingle;
 					$replace="<a title=\"$1\" href=\"$url\">$1</a>";
 					//$regexp=str_replace('$name', $name, $reg);
 					$regexp=str_replace('$name', $name, $reg_post);
@@ -200,7 +203,7 @@ class WPS_AutoLinks {
 
 							$regexp=str_replace('$name', $name, $reg);
 
-
+							$maxsingle = ( !empty( $options['customkey_preventduplicatelink'] )) ? 1 : $maxsingle;
 							$replace='<a title="$1" href="$$$url$$$">$1</a>';
 
 							$newtext = preg_replace($regexp, $replace, $text, $maxsingle);
@@ -260,7 +263,10 @@ class WPS_AutoLinks {
 		// exclude headers
 		if ( !empty( $options['excludeheading'] ) ) {
 			//Here insert special characters
-			$text = preg_replace('%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.$this->removespecialchars('\\2').'\\3'", $text);
+			$text = preg_replace('%(<h.*?>)(.*?)(</h.*?\>)%si', "\\1{$this->removespecialchars('\\\\2')}\\3", $text);
+			/*
+			$text = preg_replace('%(<h.*?>)(.*?)(</h.*?\>)%sie', "'\\1'.\$this->removespecialchars('\\2').'\\3'", $text);
+			*/
 			$text = stripslashes($text);
 		}
 

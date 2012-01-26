@@ -53,22 +53,22 @@ function wds_autolinks_settings() {
 				'type' => 'text',
 				'name' => 'ignorepost',
 				'title' => __( 'Ignore posts and pages' , 'wds'),
-				'description' => 'Paste in the IDs, slugs or titles for the post/pages you wish to exclude and separate them by commas'
+				'description' => __('Paste in the IDs, slugs or titles for the post/pages you wish to exclude and separate them by commas', 'wds'),
 			),
 			array(
 				'type' => 'text',
 				'name' => 'ignore',
 				'title' => __( 'Ignore keywords' , 'wds'),
-				'description' => 'Paste in the keywords you wish to exclude and separate them by commas'
+				'description' => __('Paste in the keywords you wish to exclude and separate them by commas', 'wds'),
 			),
 			array(
 				'type' => 'textarea',
 				'name' => 'customkey',
 				'title' => __( 'Custom Keywords' , 'wds'),
-				'description' => 'Paste in the extra keywords you want to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords.
+				'description' => __('Paste in the extra keywords you want to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords.
 				<br />Example:<br />
 				<code>WPMU DEV, plugins, themes, http://premium.wpmudev.org/<br />
-				WordPress News, http://wpmu.org/<br /></code>'
+				WordPress News, http://wpmu.org/<br /></code>', 'wds'),
 			),
 			array(
 				'type' => 'checkbox',
@@ -77,7 +77,8 @@ function wds_autolinks_settings() {
 				'items' => array(
 					'onlysingle' => __( 'Process only single posts and pages' , 'wds'),
 					'allowfeed' => __( 'Process RSS feeds' , 'wds'),
-					'casesens' => __( 'Case sensitive matching' , 'wds')
+					'casesens' => __( 'Case sensitive matching' , 'wds'),
+					'customkey_preventduplicatelink' => __( 'Prevent duplicate links' , 'wds'),
 				)
 			)
 		)

@@ -40,7 +40,7 @@ class WDS_Taxonomy {
 		$taxonomy_object = get_taxonomy( $taxonomy );
 		$taxonomy_labels = $taxonomy_object->labels;
 
-		echo '<h3>' . __( 'WPMU DEV SEO Settings ' , 'wds') . '</h3>';
+		echo '<h3>' . __( 'Infinite SEO Settings ' , 'wds') . '</h3>';
 		echo '<table class="form-table">';
 
 		$this->form_row( 'wds_title', __( 'SEO Title' , 'wds'), __( 'The SEO title is used on the archive page for this term.' , 'wds'), $tax_meta );
@@ -57,7 +57,7 @@ class WDS_Taxonomy {
 		$tax_meta = get_option( 'wds_taxonomy_meta' );
 
 		foreach (array('title', 'desc', 'bctitle', 'canonical') as $key) {
-			$tax_meta[$taxonomy][$term_id]['wds_'.$key] 	= $_POST['wds_'.$key];
+			$tax_meta[$taxonomy][$term_id]['wds_'.$key] 	= @$_POST['wds_'.$key];
 		}
 
 		foreach (array('noindex', 'nofollow') as $key) {
