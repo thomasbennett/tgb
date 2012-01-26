@@ -14,10 +14,10 @@ function wds_seoopt_settings() {
 	but it has been customized so that the Home Meta Description is WPMU DEV Premium is:
 	<blockquote>devoted to plugins, themes, resources and support to assist you in creating the absolute best WordPress MU (WPMU) site you can.</blockquote>
 	<p><img src="%s" alt="title and description sample" /></p>
-	<p>This plugin also adds a WPMU DEV SEO module below the Write Post / Page editor which you can use to customise SEO options for individual posts and pages.</p>' , 'wds' ), WDS_PLUGIN_URL . 'images/onpagesample.png' );
+	<p>This plugin also adds a Infinite SEO module below the Write Post / Page editor which you can use to customise SEO options for individual posts and pages.</p>' , 'wds' ), WDS_PLUGIN_URL . 'images/onpagesample.png' );
 
 	$fields = array();
-	if ( 'posts' == get_option('show_on_front') ) {
+	if ( WDS_SITEWIDE || 'posts' == get_option('show_on_front') ) {
 		$fields['home'] = array(
 			'title' =>  __( 'Home' , 'wds' ),
 			'intro' =>  '',
@@ -35,6 +35,16 @@ function wds_seoopt_settings() {
 					'description' => ''
 				)
 			)
+		);
+	} else {
+		$intro = '<p>' . __('You seem to be using a static front page. You can tweak its SEO settings using the Infinite SEO metabox in your Page editor.', 'wds') . '</p>';
+		if ((int)get_option('page_for_posts')) {
+			$intro .= '<p>' . __('You can do the same for your selected posts page', 'wds') . '</p>';
+		}
+		$fields['home'] = array(
+			'title' => __('Home', 'wds'),
+			'intro' => $intro,
+			'options' => array(),
 		);
 	}
 	foreach (get_post_types() as $posttype) {

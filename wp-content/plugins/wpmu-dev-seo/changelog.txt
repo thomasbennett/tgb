@@ -5,6 +5,43 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.3.6 - 12/22/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Added options for duplicate link prevention.
+- Applied better contextual help trigger.
+
+1.3.5 - 11/29/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Fix for robots meta output interaction with privacy settings.
+- Additional BuddyPress items check.
+
+1.3.4 - 11/24/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Fix for BuddyPress groups support with no groups set up.
+- Added WPML config file.
+
+1.3.3 - 11/17/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Fix for updated SEOMoz links.
+- Fix for BuddyPress groups priority calculation.
+
+1.3.2 - 11/10/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Added BuddyPress groups and profiles in sitemaps.
+- Fixed site validation META headers.
+- Fixed sitemap path finding.
+
+1.3.1 - 11/05/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Fix for sitemap path options.
+- Fix for autolinks issue with titles.
+
+1.3 - 10/25/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Sitemap module rewrite, new sitemap options and dashboard widget.
+- Changed title limit to soft limit.
+- Added priority options for posts.
+
 1.2.1 - 07/16/2011 Vladislav Bailovic
 ----------------------------------------------------------------------
 - Fixed autolink detection for strings that start with an 
@@ -128,3 +165,5 @@ exist yet
 1.0 - 01/08/2010
 ----------------------------------------------------------------------
 - Initial Release.
+
+24419-1324580836-au

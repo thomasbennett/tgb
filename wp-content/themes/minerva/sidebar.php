@@ -57,7 +57,7 @@
                             <div class="sidebar-content">
                               <?php 
                                 $blog_cats_include = get_option('onixus_blog_cats_include');
-                                onixus_latestnews($blog_cats_include,5,"<h3>Latest News</h3>",1);
+                                //onixus_latestnews($blog_cats_include,5,"<h3>Latest News</h3>",1);
                               ?>
                             </div>
                        <?php 

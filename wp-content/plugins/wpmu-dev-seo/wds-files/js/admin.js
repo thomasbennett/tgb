@@ -1,6 +1,6 @@
 jQuery(document).ready( function($) {
 	var bgx = ( isRtl ? 'left' : 'right' );
-
+/*
 	// help tab
 	$('.toggle-contextual-help').click(function () {
 		if ( ! $('#contextual-help-wrap').hasClass('contextual-help-open') )
@@ -18,4 +18,6 @@ jQuery(document).ready( function($) {
 		});
 		return false;
 	});
+*/
+$('#contextual-help-link').trigger('click');
 });

@@ -89,9 +89,10 @@ class WDS_OnPage {
 			$post = get_post($postid);
 		}
 
-		global $wds_options;
+		//global $wds_options;
+		$wds_options = get_wds_options();
 
-		if ( is_home() && 'posts' == get_option('show_on_front') ) {
+		if ( is_front_page() && 'posts' == get_option('show_on_front') ) {
 			$title = wds_replace_vars($wds_options['title-home'], (array) $post );
 		} else if ( is_home() && 'posts' != get_option('show_on_front') ) {
 			$post = get_post(get_option('page_for_posts'));
@@ -201,7 +202,18 @@ class WDS_OnPage {
 			}
 		}
 
-		if ($robots != '') {
+		// Verification codes
+		if (@$wds_options['verification-google']) {
+			echo '<meta name="google-site-verification" content="' . esc_attr($wds_options['verification-google']) . '" />' . "\n";
+		}
+		if (@$wds_options['verification-bing']) {
+			echo '<meta name="msvalidate.01" content="' . esc_attr($wds_options['verification-bing']) . '" />' . "\n";
+		}
+		if (@$wds_options['verification-yahoo']) {
+			echo '<meta name="y_key" content="' . esc_attr($wds_options['verification-yahoo']) . '" />' . "\n";
+		}
+
+		if ($robots != '' && 1 == (int)get_option('blog_public')) {
 			$robots = rtrim($robots,',');
 			echo "\t".'<meta name="robots" content="'.$robots.'"/>'."\n";
 		}
@@ -210,7 +222,8 @@ class WDS_OnPage {
 	function wds_metadesc() {
 		if ( !is_admin() ) {
 			global $post, $wp_query;
-			global $wds_options;
+			//global $wds_options;
+			$wds_options = get_wds_options();
 
 			if (is_singular()) {
 				$metadesc = wds_get_value('metadesc');

@@ -3,7 +3,7 @@
  * WordPress Abstraction
  *
  * The functions within this file will detect the version of WordPress you are running
- * and will alter the environment so WPMU DEV SEO can run regardless.
+ * and will alter the environment so Infinite SEO can run regardless.
  *
  * The code below mostly contains function mappings.
  */

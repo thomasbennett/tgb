@@ -13,7 +13,8 @@ function wds_seomoz_dashboard_widget () {
 	$urlmetrics = $seomozapi->urlmetrics( $target_url );
 
 	$attribution = str_replace( '/', '%252F', untrailingslashit( $target_url ) );
-	$attribution = "http://www.opensiteexplorer.org/$attribution/a";
+	//$attribution = "http://www.opensiteexplorer.org/$attribution/a";
+	$attribution = "http://www.opensiteexplorer.org/links?site={$attribution}";
 
 	if (!is_object($urlmetrics)) {
 		printf( __('Unable to retrieve data from the SEOmoz API. Error: %s.' , 'wds'), $urlmetrics );

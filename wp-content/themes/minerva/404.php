@@ -8,8 +8,7 @@
                         <h2>error message</h2>
                     </div>
                     <div class="error404-right">
-                    	<h1>Oops</h1>
-                        <h1 class="head-not-found">Page not found</h1>
+                      <h1 class="head-not-found">Oops!</h1>
                         <hr class="content-line" />
                         <p>We're sorry, but we can't find the page you were looking for. It's probably something we've done wrong but now we know about it we'll try to fix it. In the meantime, try returning to the homepage or search for something below.</p>
                         <div id="search-box-404">                        	

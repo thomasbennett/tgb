@@ -5,590 +5,375 @@
  */
 
 /**
- * WPMU DEV SEO pages optimization classes
+ * Infinite SEO pages optimization classes
  *
- * @package WPMU DEV SEO
- * @since 0.1
+ * @package Infinite SEO
+ * @since 1.3
  */
 
-class WDS_XML_Sitemap_Base {
+class WDS_XML_Sitemap {
 
-	function WDS_XML_Sitemap_Base() {
+	private $_data;
+	private $_db;
+
+	private $_items;
+
+	public function __construct () {
+		global $wpdb, $wds_options;
+		if (!$wds_options['sitemap']) return false;
+
+		$data = get_option('wds_sitemap_options');
+		if (!@$data['sitemappath'] || !@$data['sitemappath']) return false;
+		$this->_data = $data;
+		$this->_db = $wpdb;
+
+		$this->_init_items();
+
+		// Refactor this!
+		$this->generate_sitemap();
 	}
 
-	function generate_sitemap() {
-	}
-
-	function write_sitemap( $sitemappath, $output ) {
-		$f = @fopen($sitemappath, 'w+');
-		@fwrite($f, $output);
-		@fclose($f);
-		if ( $this->gzip_sitemap( $sitemappath, $output ) )
-			return true;
-		return false;
-	}
-
-	function gzip_sitemap( $sitemap, $output ) {
-		$f = @fopen( $sitemap.'.gz', "w" );
-		if ( $f ) {
-			@fwrite( $f, gzencode( $output , 9 ) );
-			@fclose( $f );
-			return true;
-		}
-		return false;
-	}
-
-	function ping_search_engines( $sitemapurl, $echo = false ) {
-		$sitemapurl = urlencode($sitemapurl.'.gz');
-
-		$resp = wp_remote_get('http://www.google.com/webmasters/tools/ping?sitemap='.$sitemapurl);
-
-		if ($echo && $resp['response']['code'] == '200')
-			__e( 'Successfully notified Google of updated sitemap.' ) . '<br/>';
-
-		//$appid = '';
-		//$resp = wp_remote_get('http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid='.$appid.'&url='.$sitemapurl);
-
-		if ($echo && $resp['response']['code'] == '200')
-			__e( 'Successfully notified Yahoo! of updated sitemap.' ) . '<br/>';
-
-		$resp = wp_remote_get('http://www.bing.com/webmaster/ping.aspx?sitemap='.$sitemapurl);
-
-		if ($echo && $resp['response']['code'] == '200')
-			__e( 'Successfully notified Bing of updated sitemap.' ) . '<br/>';
-
-		$resp = wp_remote_get('http://submissions.ask.com/ping?sitemap='.$sitemapurl);
-
-		if ($echo && $resp['response']['code'] == '200')
-			__e( 'Successfully notified Ask.com of updated sitemap.' ) . '<br/>';
-	}
-
-	function w3c_date($time='') {
-	  if (empty($time))
-	    $time = time();
-		else
-			$time = strtotime($time);
-	  $offset = date("O",$time);
-	  return date("Y-m-d\TH:i:s",$time).substr($offset,0,3).":".substr($offset,-2);
-	}
-
-	function xml_clean( $str ) {
-		return ent2ncr( esc_html( str_replace ( "’", "&quot;", $str ) ) );
-	}
-
-	function make_image_local( $url, $post_id, $title, $type = '' ) {
-		$tmp = download_url( $url );
-
-		preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches);
-
-		$title = sanitize_title( strtolower($title) );
-		$file_array['name'] = $title . '.' . $matches[1];
-		$file_array['tmp_name'] = $tmp;
-
-		if ( is_wp_error($tmp) ) {
-			@unlink($file_array['tmp_name']);
-			$file_array['tmp_name'] = '';
-			return false;
-		} else {
-			return media_handle_sideload( $file_array, $post_id, sprintf( __( 'Poster image for %1$s video in %2$s' , 'wds'), $type, $title ) );
-		}
-	}
-
-	function update_video_meta( $post, $echo = false ) {
-		global $shortcode_tags;
-
+	public function generate_sitemap () {
 		global $wds_options;
 
-		$shortcode_tags = array(
-			'blip.tv' => '',
-			// 'dailymotion' => '',
-			// 'flickrvideo' => '',
-			// 'flash' => '',
-			'flv' => '',
-			// 'googlevideo' => '',
-			// 'metacafe' => '',
-			// 'myspace' => '',
-			// 'quicktime' => '',
-			// 'spike' => '',
-			// 'veoh' => '',
-			// 'videopress' => '',
-			// 'viddler' => '',
-			// 'videofile' => '',
-			'vimeo' => '',
-			// 'wpvideo' => '',
-			'youtube' => '',
-		);
-
-		$oldvid = wds_get_value('video_meta', $post->ID);
-
-		if (preg_match('/'.get_shortcode_regex().'/', $post->post_content, $matches)) {
-			$_GLOBALS['post'] 	= $post;
-
-			if ($post->post_type == 'post') {
-				$wp_query->is_single = true;
-				$wp_query->is_page = false;
-			} else {
-				$wp_query->is_single = false;
-				$wp_query->is_page = true;
-			}
-			// Grab the meta data from the post
-			$cats = get_the_terms($post->ID, 'category');
-			$tags = get_the_terms($post->ID, 'post_tag');
-			$tag = array();
-			if (is_array($tags)) {
-				foreach ($tags as $t) {
-					$tag[] = $t->name;
-				}
-			} else {
-				$tag[] = $cats[0]->name;
-			}
-
-			$focuskw = wds_get_value('focuskw', $post->ID);
-			if (!empty($focuskw))
-				$tag[] = $focuskw;
-
-			$title = wds_get_value('title', $post->ID);
-			if (empty($title)) {
-				$title = wds_replace_vars($wds_options['title-'.$post->post_type], (array) $post );
-			}
-
-			$vid 						= array();
-			$vid['loc'] 				= get_permalink($post->ID);
-			$vid['title']				= $this->xml_clean($title);
-			$vid['publication_date'] 	= $this->w3c_date($post->post_date);
-			$vid['category']			= $cats[0]->name;
-			$vid['tag']					= $tag;
-
-			$vid['description'] 		= wds_get_value('metadesc', $post->ID);
-			if ( !$vid['description'] ) {
-				$vid['description']	= $this->xml_clean(substr(preg_replace('/\s+/',' ',strip_tags(strip_shortcodes($post->post_content))), 0, 300));
-			}
-
-			preg_match('/image=(\'|")?([^\'"\s]+)(\'|")?/', $matches[3], $match);
-			if (isset($match[2]) && !empty($match[2]))
-				$vid['thumbnail_loc'] 	= $match[2];
-
-			if (!isset($vid['thumbnail_loc']) && isset($oldvid['thumbnail_loc']))
-				$vid['thumbnail_loc'] 	= $oldvid['thumbnail_loc'];
-
-			if ($vid['thumbnail_loc'] == 'n')
-				unset($vid['thumbnail_loc']);
-
-			switch ($matches[2]) {
-				case 'vimeo':
-					$videoid 	= preg_replace('|http://(www\.)?vimeo\.com/|','',$matches[5]);
-					$url 		= 'http://vimeo.com/api/v2/video/'.$videoid.'.php';
-					$vimeo_info = wp_remote_get($url);
-					$vimeo_info = unserialize($vimeo_info['body']);
-
-					// echo '<pre>'.print_r($vimeo_info, 1).'</pre>';
-
-					$vid['player_loc'] 		= 'http://www.vimeo.com/moogaloop.swf?clip_id='.$videoid;
-					$vid['duration']		= $vimeo_info[0]['duration'];
-					$vid['view_count']		= $vimeo_info[0]['stats_number_of_plays'];
-
-					if (!isset($vid['thumbnail_loc']))
-						$vid['thumbnail_loc'] 	= $this->make_image_local($vimeo_info[0]['thumbnail_medium'], $post->ID, $title, $matches[2]);
-					break;
-				case 'blip.tv':
-					preg_match('|posts_id=(\d+)|', $matches[3], $match);
-					$videoid	= $match[1];
-
-					$blip_info	= wp_remote_get('http://blip.tv/rss/view/'.$videoid);
-					$blip_info	= $blip_info['body'];
-
-					preg_match("|<blip:runtime>([\d]+)</blip:runtime>|", $blip_info, $match);
-					$vid['duration']		= $match[1];
-
-					preg_match('|<media:player url="([^"]+)">|', $blip_info, $match);
-					$vid['player_loc']		= $match[1];
-
-					preg_match('|<enclosure length="[\d]+" type="[^"]+" url="([^"]+)"/>|', $blip_info, $match);
-					$vid['content_loc']		= $match[1];
-
-					preg_match('|<media:thumbnail url="([^"]+)"/>|', $blip_info, $match);
-
-					if (!isset($vid['thumbnail_loc'])) {
-						// $vid['thumbnail_loc']	= $this->make_image_local($match[1], $post->ID, $title, $matches[2]);
-						$vid['thumbnail_loc']	= $match[1];
-					}
-					break;
-				case 'youtube':
-					$videoid	= preg_replace('|http://(www\.)?youtube.com/(watch)?\?v=|','',$matches[5]);
-
-					$youtube_info = wp_remote_get('http://gdata.youtube.com/feeds/api/videos/'.$videoid);
-					$youtube_info = $youtube_info['body'];
-
-					preg_match("|<yt:duration seconds='([\d]+)'/>|", $youtube_info, $match);
-					$vid['duration']		= $match[1];
-
-					$vid['player_loc']		= 'http://www.youtube-nocookie.com/v/'.$videoid;
-
-					if (!isset($vid['thumbnail_loc']))
-						$vid['thumbnail_loc']	= $this->make_image_local('http://img.youtube.com/vi/'.$videoid.'/0.jpg', $post->ID, $title, $matches[2]);
-					break;
-				case 'flv':
-					// TODO add fallback poster image for when no poster image present
-					$vid['content_loc']		= $matches[5];
-					break;
-				default:
-					echo '<pre>'.print_r($matches,1).'</pre>';
-					echo '<pre>'.print_r($vid,1).'</pre>';
-					$vid = 'none';
-					break;
-			}
-			if ($echo)
-				echo sprintf( __( 'Video Metadata updated for %s' , 'wds'), $post->post_title ) . '<br/>';
-		} else {
-			$vid = 'none';
-		}
-
-		wds_set_value( 'video_meta', $vid, $post->ID );
-		return $vid;
-	}
-}
-
-class WDS_XML_Sitemap extends WDS_XML_Sitemap_Base {
-
-	function WDS_XML_Sitemap() {
-		global $wds_echo, $wds_options;
-
-		//if ( !$wds_options['sitemaps'] )
-		if ( !$wds_options['sitemap'] ) // Changed plural to singular
-			return;
-
-		$sitemap_options = get_option( 'wds_sitemap_options' );
-//echo "<pre>" . var_export($sitemap_options,1)  . "</pre>";
-		if ( !isset( $sitemap_options['sitemappath'] ) || empty( $sitemap_options['sitemappath'] ) )
-			return;
-
-		$this->generate_sitemap( $sitemap_options['sitemapurl'], $sitemap_options['sitemappath'], $wds_echo );
-		$this->ping_search_engines( $sitemap_options['sitemapurl'], $wds_echo );
-	}
-
-	function generate_sitemap( $sitemapurl, $sitemappath, $echo = false ) {
-		global $wpdb, $wp_taxonomies, $wp_rewrite, $wds_options;
-
 		//this can take a whole lot of time on big blogs
-    set_time_limit(120);
+    	set_time_limit(120);
 
-		$wp_rewrite->flush_rules();
+		if (!$this->_items) $this->_load_all_items();
 
-		// The stack of URL's to add to the sitemap
-		$stack = array();
-		$stackedurls = array();
+		$map = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 
-		// Add the homepage first
-		$url = array();
-		$url['loc'] = get_bloginfo('url').'/';
-		$url['pri'] = 1;
-		$url['chf'] = 'daily';
+		if (@$wds_options['sitemap-stylesheet']) $map .= $this->_get_stylesheet('xml-sitemap');
 
-		$stackedurls[] = $url['loc'];
-		$stack[] = $url;
-
-		$post_types = array();
-		foreach (get_post_types() as $post_type) {
-			if ( !empty( $wds_options['post_types-'.$post_type.'-not_in_sitemap'] ) )
-				continue;
-			if ( in_array( $post_type, array('revision','nav_menu_item','attachment') ) )
-				continue;
-			$post_types[] = $post_type;
-		}
-
-		$pt_query = 'AND post_type IN (';
-		foreach ($post_types as $pt) {
-			$pt_query .= '"'.$pt.'",';
-		}
-		$pt_query = rtrim($pt_query,',').')';
-
-		// Grab posts and pages and add to stack
-		$posts = $wpdb->get_results("SELECT ID, post_content, post_parent, post_type, post_modified
-										FROM $wpdb->posts
-										WHERE post_status = 'publish'
-										AND	post_password = ''
-										$pt_query
-										ORDER BY post_parent ASC, post_modified DESC LIMIT " . WDS_SITEMAP_POST_LIMIT );
-		if ( $echo )
-			echo sprintf( __( '%s posts and pages found.', count( $posts ) , 'wds') ) . '<br/>';
-
-		foreach ($posts as $p) {
-			$link 		= get_permalink($p->ID);
-
-			if (isset($wds_options['trailingslash']) && $wds_options['trailingslash'] && $p->post_type != 'single')
-				$link = trailingslashit($link);
-
-			$canonical 	= wds_get_value('canonical', $p->ID);
-			if ( !empty($canonical) && $canonical != $link )
-				$link = $canonical;
-			if ( wds_get_value('meta-robots-noindex', $p->ID) )
-				continue;
-			if ( strlen( wds_get_value('redirect', $p->ID) ) > 0 )
-				continue;
-			if ($p->ID == get_option('page_on_front'))
-				continue;
-
-			$url = array();
-			$pri = wds_get_value('sitemap-prio', $p->ID);
-			if (is_numeric($pri))
-				$url['pri'] = $pri;
-			elseif ($p->post_parent == 0 && $p->post_type = 'page')
-				$url['pri'] = 0.8;
-			else
-				$url['pri'] = 0.6;
-
-			$url['images'] = array();
-
-			preg_match_all("|(<img [^>]+?>)|", $p->post_content, $matches, PREG_SET_ORDER);
-
-			if (count($matches) > 0) {
-				$tmp_img = array();
-				foreach ($matches as $imgarr) {
-					unset($imgarr[0]);
-					foreach($imgarr as $img) {
-						unset($image['title']);
-						unset($image['alt']);
-
-						// FIXME: get true caption instead of alt / title
-						$res = preg_match( '/src=("|\')([^"\']+)("|\')/', $img, $match );
-						if ($res) {
-							$image['src'] = $match[2];
-							if ( strpos($image['src'], 'http') !== 0 ) {
-								$image['src'] = get_bloginfo('url').$image['src'];
-							}
-						}
-						if ( in_array($image['src'], $tmp_img) )
-							continue;
-						else
-							$tmp_img[] = $image['src'];
-
-						$res = preg_match( '/title=("|\')([^"\']+)("|\')/', $img, $match );
-						if ($res)
-							$image['title'] = str_replace('-',' ',str_replace('_',' ',$match[2]));
-
-						$res = preg_match( '/alt=("|\')([^"\']+)("|\')/', $img, $match );
-						if ($res)
-							$image['alt'] = str_replace('-',' ',str_replace('_',' ',$match[2]));
-
-						if (empty($image['title']))
-							unset($image['title']);
-						if (empty($image['alt']))
-							unset($image['alt']);
-						$url['images'][] = $image;
+		$image_schema_url = 'http://www.google.com/schemas/sitemap-image/1.1';
+		$image_schema = @$wds_options['sitemap-images'] ? "xmlns:image='{$image_schema_url}'" : '';
+		$map .= "<urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9' {$image_schema}>\n";
+		foreach ($this->_items as $item) {
+			$map .= "<url>\n";
+			foreach ($item as $key => $val) {
+				if ('images' == $key) {
+					if (!$val) continue;
+					if (!@$wds_options['sitemap-images']) continue;
+					foreach ($item['images'] as $image) {
+						$text = $image['title'] ? $image['title'] : $image['alt'];
+						$map .= "<image:image>";
+						$map .= "<image:loc>" . esc_url($image['src']) . '</image:loc>';
+						$map .= "<image:title>" . ent2ncr($text) . '</image:title>';
+						$map .= "</image:image>\n";
 					}
-				}
+				} else $map .= "<{$key}>{$val}</{$key}>\n";
 			}
-
-			// echo '<pre>'.print_r($url,1).'</pre>';
-
-			$url['mod']	= $p->post_modified;
-			$url['loc'] = $link;
-			$url['chf'] = 'weekly';
-			if (!in_array($url['loc'], array_values($stackedurls))) {
-				$stack[] = $url;
-				$stackedurls[] = $url['loc'];
-			}
+			$map .= "</url>\n\n";
 		}
-		unset($posts);
+		$map .= "</urlset>";
+		$this->_write_sitemap($map);
+		$this->_postprocess_sitemap();
+	}
 
-		// Grab all taxonomies and add to stack
-		$sitemap_taxonomies = array();
-		foreach($wp_taxonomies as $taxonomy) {
-			if ( !empty( $wds_options['taxonomies-'.$taxonomy->name.'-not_in_sitemap'] ) )
-				continue;
+	public static function notify_engines ($forced=false) {
+		global $wds_options;
+		if (!@$wds_options['sitemapurl']) return false;
 
-			// Skip link and nav categories
-			if ($taxonomy->name == 'link_category' || $taxonomy->name == 'nav_menu')
-				continue;
+		$result = array();
+		$now = time();
 
-			$sitemap_taxonomies[] = $taxonomy->name;
+		if ($forced || @$wds_options['ping-google']) {
+			do_action('wds_before_search_engine_update', 'google');
+			$resp = wp_remote_get('http://www.google.com/webmasters/tools/ping?sitemap=' . esc_url($wds_options['sitemapurl']));
+			$result['google'] = array(
+				'response' => $resp,
+				'time' => $now,
+			);
+			do_action('wds_after_search_engine_update', 'google', (bool)(@$resp['response']['code'] == '200'), $resp);
 		}
-		$terms = get_terms( $sitemap_taxonomies, array('hide_empty' => true) );
-
-		if ( $echo )
-			echo sprintf( __( '%s taxonomy entries found.', count( $terms ) , 'wds') ) . '<br/>';
-
-		foreach( $terms as $c ) {
-			$url = array();
-
-			if ( wds_get_term_meta( $c, $c->taxonomy, 'wds_noindex' ) )
-				continue;
-
-			$url['loc'] = wds_get_term_meta( $c, $c->taxonomy, 'wds_canonical' );
-			if ( !$url['loc'] )
-				$url['loc'] = get_term_link( $c, $c->taxonomy );
-
-			if ($c->count > 10) {
-				$url['pri'] = 0.6;
-			} else if ($c->count > 3) {
-				$url['pri'] = 0.4;
-			} else {
-				$url['pri'] = 0.2;
-			}
-
-			// Grab last modified date
-			$sql = "SELECT MAX(p.post_date) AS lastmod
-					FROM	$wpdb->posts AS p
-					INNER JOIN $wpdb->term_relationships AS term_rel
-					ON		term_rel.object_id = p.ID
-					INNER JOIN $wpdb->term_taxonomy AS term_tax
-					ON		term_tax.term_taxonomy_id = term_rel.term_taxonomy_id
-					AND		term_tax.taxonomy = '$c->taxonomy'
-					AND		term_tax.term_id = $c->term_id
-					WHERE	p.post_status = 'publish'
-					AND		p.post_password = ''";
-			$url['mod'] = $wpdb->get_var( $sql );
-			$url['chf'] = 'weekly';
-			// echo '<pre>'.print_r($url,1).'</pre>';
-			$stack[] = $url;
+		if ($forced || @$wds_options['ping-yahoo']) {
+			do_action('wds_before_search_engine_update', 'yahoo');
+			$resp = wp_remote_get('http://search.yahooapis.com/SiteExplorerService/V1/ping?sitemap=' . esc_url($wds_options['sitemapurl']));
+			$result['yahoo'] = array(
+				'response' => $resp,
+				'time' => $now,
+			);
+			do_action('wds_after_search_engine_update', 'yahoo', (bool)(@$resp['response']['code'] == '200'), $resp);
 		}
-		unset($terms);
+		if ($forced || @$wds_options['ping-bing']) {
+			do_action('wds_before_search_engine_update', 'bing');
+			$resp = wp_remote_get('http://www.bing.com/webmaster/ping.aspx?sitemap=' . esc_url($wds_options['sitemapurl']));
+			$result['bing'] = array(
+				'response' => $resp,
+				'time' => $now,
+			);
+			do_action('wds_after_search_engine_update', 'bing', (bool)(@$resp['response']['code'] == '200'), $resp);
+		}
+		if ($forced || @$wds_options['ping-ask']) {
+			do_action('wds_before_search_engine_update', 'ask');
+			$resp = wp_remote_get('http://submissions.ask.com/ping?sitemap=' . esc_url($wds_options['sitemapurl']));
+			$result['ask'] = array(
+				'response' => $resp,
+				'time' => $now,
+			);
+			do_action('wds_after_search_engine_update', 'ask', (bool)(@$resp['response']['code'] == '200'), $resp);
+		}
 
-		// Set-up XSL URL to a relative value.
+		update_option('wds_engine_notification', $result);
+	}
+
+	private function _get_stylesheet ($xsl) {
 		$plugin_host = parse_url(WDS_PLUGIN_URL, PHP_URL_HOST);
 		$xsl_host = preg_replace('~' . preg_quote('http://' . $plugin_host . '/') . '~', '', WDS_PLUGIN_URL);
 		if (is_multisite() && defined('SUBDOMAIN_INSTALL') && !SUBDOMAIN_INSTALL) {
 			$xsl_host = '../' . $xsl_host;
 		}
+		return "<?xml-stylesheet type='text/xml' href='{$xsl_host}wds-sitemaps/xsl/{$xsl}.xsl'?>\n";
+	}
 
-		/*$output = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="' . WDS_PLUGIN_URL . 'wds-sitemaps/xsl/xml-sitemap.xsl"?>'."\n";*/
-		$output = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="' . $xsl_host . 'wds-sitemaps/xsl/xml-sitemap.xsl"?>'."\n";
-		$output .= '<!-- ' . sprintf( __( 'XML Sitemap Generated by WPMU DEV SEO, containing %s' , 'wds'), count($stack) ) .' URLs -->'."\n";
-		$output .= '<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
-		if ($echo)
-			echo __( 'Starting to generate output.' , 'wds') . '<br/><br/>';
-		foreach ($stack as $url) {
-			if (!isset($url['mod']))
-				$url['mod'] = '';
-			$output .= "\t<url>\n";
-			$output .= "\t\t<loc>".$url['loc']."</loc>\n";
-			$output .= "\t\t<lastmod>".$this->w3c_date($url['mod'])."</lastmod>\n";
-			$output .= "\t\t<changefreq>".$url['chf']."</changefreq>\n";
-			$output .= "\t\t<priority>".number_format($url['pri'],1)."</priority>\n";
-			if (isset($url['images']) && count($url['images']) > 0) {
-				foreach($url['images'] as $img) {
-					$output .= "\t\t<image:image>\n";
-					$output .= "\t\t\t<image:loc>".$this->xml_clean($img['src'])."</image:loc>\n";
-					if ( isset($img['title']) )
-						$output .= "\t\t\t<image:title>".$this->xml_clean($img['title'])."</image:title>\n";
-					if ( isset($img['alt']) )
-						$output .= "\t\t\t<image:caption>".$this->xml_clean($img['alt'])."</image:caption>\n";
-					$output .= "\t\t</image:image>\n";
-				}
+	private function _write_sitemap ($map) {
+		$file = $this->_data['sitemappath'];
+		@file_put_contents($file, $map);
+
+		$f = @fopen("{$file}.gz", "w");
+		if (!$f) return false;
+
+		@fwrite($f, gzencode($map, 9));
+		@fclose($f);
+
+		return true;
+	}
+
+	private function _postprocess_sitemap () {
+		// Throw a hook
+		do_action('wds_sitemap_created');
+
+		$this->notify_engines();
+
+		// Update sitemap meta data
+		update_option('wds_sitemap_dashboard', array(
+			'items' => count($this->_items),
+			'time' => time(),
+		));
+	}
+
+	private function _extract_images ($content) {
+		preg_match_all("|(<img [^>]+?>)|", $content, $matches, PREG_SET_ORDER);
+		if (!$matches) return false;
+
+		$images = array();
+		foreach ($matches as $tmp) {
+			$img = $tmp[0];
+
+			$res = preg_match('/src=("|\')([^"\']+)("|\')/', $img, $match);
+			$src = $res ? $match[2] : '';
+			if ( strpos($src, 'http') !== 0 ) {
+				$src = site_url($src);
 			}
-			$output .= "\t</url>\n";
+
+			$res = preg_match( '/title=("|\')([^"\']+)("|\')/', $img, $match );
+			$title = $res ? str_replace('-', ' ', str_replace('_', ' ', $match[2])) : '';
+
+			$res = preg_match( '/alt=("|\')([^"\']+)("|\')/', $img, $match );
+			$alt = $res ? str_replace('-', ' ', str_replace('_', ' ', $match[2])) : '';
+
+			$images[] = array(
+				'src' => $src,
+				'title' => $title,
+				'alt' => $alt,
+			);
 		}
-		$output .= '</urlset>';
-
-		if ($this->write_sitemap( $sitemappath, $output ) && $echo)
-			echo sprintf( __( '%1$s: <a href="%2$s">Sitemap</a> successfully (re-)generated.' , 'wds'), date( 'H:i' ), $sitemapurl ) . '<br/><br/>';
-		else if ($echo)
-			echo sprintf( __( '%1$s: <a href="%2$s">Something went wrong...</a>.' , 'wds'), date( 'H:i' ), $sitemapurl ) . '<br/><br/>';
-	}
-}
-
-class WDS_XML_News_Sitemap extends WDS_XML_Sitemap_Base {
-
-	function WDS_XML_News_Sitemap() {
-		global $wds_echo, $wds_options;
-
-		add_action( 'wds_settings', array(&$this, 'admin_panel' ), 10, 1 );
-
-		if ( !isset($wds_options['enablexmlnewssitemap']) || !$wds_options['enablexmlnewssitemap'])
-			return;
-
-		add_filter('wds_metabox_entries',array(&$this, 'filter_meta_box_entries' ),10,1);
-
-		if ( !isset($wds_options['newssitemappath']) || empty($wds_options['newssitemappath']) )
-			return;
-
-		$this->generate_sitemap( $wds_options['newssitemapurl'], $wds_options['newssitemappath'], $wds_echo );
-		$this->ping_search_engines( $wds_options['newssitemapurl'], $wds_echo );
+		return $images;
 	}
 
-	function filter_meta_box_entries( $mbs ) {
-		$mbs['newssitemap-genre'] = array(
-			'name' => 'newssitemap-genre',
-			'type' => 'multiselect',
-			'std' => 'blog',
-			'title' => __( 'Google News Genre' , 'wds'),
-			'description' => __( 'Genre to show in Google News Sitemap.' , 'wds'),
-			'options' => array(
-				'pressrelease' => __( 'Press Release', 'wds'),
-				'satire' => __( 'Satire' , 'wds'),
-				'blog' => __( 'Blog' , 'wds'),
-				'oped' => __( 'Op-Ed' , 'wds'),
-				'opinion' => __( 'Opinion' , 'wds'),
-				'usergenerated' => __( 'User Generated' , 'wds'),
-			),
+	private function _init_items () {
+		$this->_items = array();
+	}
+
+	/**
+	 * Adds a single item into the sitemap queue.
+	 */
+	private function _add_item ($url, $priority, $freq='weekly', $time=false, $content='') {
+		if (!$this->_items) $this->_init_items();
+		$time = $time ? $time : time();
+		$offset = date("O", $time);
+
+		$item = array (
+			'loc' => $url,
+			'lastmod' => date("Y-m-d\TH:i:s",$time).substr($offset,0,3).":".substr($offset,-2),//date('Y-m-d', $time),
+			'changefreq' => strtolower($freq),
+			'priority' => sprintf("%.1f", $priority),
 		);
-		return $mbs;
+
+		$item['images'] = $content ? $this->_extract_images($content) : array();
+
+		$this->_items[] = $item;
 	}
 
-	function generate_sitemap( $sitemapurl, $sitemappath, $echo = false) {
-
-		global $wpdb, $wp_taxonomies, $wp_rewrite, $wds_options;
-
-		// Set-up XSL URL to a relative value.
-		$plugin_host = parse_url(WDS_PLUGIN_URL, PHP_URL_HOST);
-		$xsl_host = preg_replace('~' . preg_quote('http://' . $plugin_host . '/') . '~', '', WDS_PLUGIN_URL);
-		if (is_multisite() && defined('SUBDOMAIN_INSTALL') && !SUBDOMAIN_INSTALL) {
-			$xsl_host = '../' . $xsl_host;
+	/**
+	 * Loads all items that will get into a sitemap.
+	 */
+	private function _load_all_items () {
+		$this->_add_item(site_url(), 1, 'daily'); // Home URL
+		$this->_load_post_items();
+		$this->_load_taxonomy_items();
+		// Load BuddyPress-specific items.
+		if (defined('BP_VERSION') && is_main_site()) {
+			$this->_load_buddypress_group_items();
+			$this->_load_buddypress_profile_items();
 		}
+	}
 
-		$output = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
-		/*$output .= '<?xml-stylesheet type="text/xsl" href="' . WDS_PLUGIN_URL . 'wds-sitemaps/xsl/xml-news-sitemap.xsl"?>'."\n";*/
-		$output .= '<?xml-stylesheet type="text/xsl" href="' . $xsl_host . 'wds-sitemaps/xsl/xml-news-sitemap.xsl"?>'."\n";
-		$output .= '<!-- ' . __( 'XML NEWS Sitemap Generated by WPMU DEV SEO ' , 'wds') . ' -->'."\n";
-		$output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:n="http://www.google.com/schemas/sitemap-news/0.9">'."\n";
-		if ($echo)
-			echo __( 'Starting to generate output.' , 'wds') . '<br/><br/>';
+	/**
+	 * Loads BuddyPress Group items.
+	 */
+	private function _load_buddypress_group_items () {
+		if (!function_exists('groups_get_groups')) return false; // No BuddyPress Groups, bail out.
+		global $wds_options;
+		if (!defined('BP_VERSION')) return false; // Nothing to do
+		if (!(int)@$wds_options['sitemap-buddypress-groups']) return false; // Nothing to do
 
-		// Grab posts and pages and add to output
-		$posts = $wpdb->get_results("SELECT ID, post_title, post_date FROM $wpdb->posts WHERE post_status = 'publish' AND post_type = 'post' ORDER BY post_date DESC LIMIT 1000");
-		if ($echo) {
-			echo sprintf( __( '%s posts and pages found.' , 'wds'), count($posts) ) . '<br/>';
+		$groups = groups_get_groups(array('per_page', WDS_BP_GROUPS_LIMIT));
+		$groups = @$groups['groups'] ? $groups['groups'] : array();
+
+		//$total_users = (int)count_users();
+		//$total_users = $total_users ? $total_users : 1;
+
+		foreach ($groups as $group) {
+			if (@$wds_options["exclude-buddypress-group-{$group->slug}"]) continue;
+
+			//$priority = sprintf("%.1f", ($group->total_member_count / $total_users));
+			$link = bp_get_group_permalink($group);
+			$this->_add_item(
+				$link,
+				0.2, //$priority
+				'weekly',
+				strtotime($group->last_activity),
+				$group->description
+			);
 		}
+		return true;
+	}
+
+	/**
+	 * Loads BuddyPress profile items.
+	 */
+	private function _load_buddypress_profile_items () {
+		global $wds_options;
+		if (!defined('BP_VERSION')) return false; // Nothing to do
+		if (!(int)@$wds_options['sitemap-buddypress-profiles']) return false; // Nothing to do
+
+		$users = bp_core_get_users(array('per_page' => WDS_BP_PROFILES_LIMIT));
+		$users = @$users['users'] ? $users['users'] : array();
+
+		foreach ($users as $user) {
+			$wp_user = new WP_User($user->id);
+			$role = @$wp_user->roles[0];
+			if (@$wds_options["exclude-profile-role-{$role}"]) continue;
+
+			$link = bp_core_get_user_domain($user->id);
+			$this->_add_item(
+				$link,
+				0.2,
+				'weekly',
+				strtotime($user->last_activity),
+				$user->display_name
+			);
+		}
+	}
+
+	/**
+	 * Loads posts into the sitemap.
+	 */
+	private function _load_post_items () {
+		global $wds_options;
+
+		$get_content = @$wds_options['sitemap-images'] ? 'post_content,' : '';
+
+		$types = array();
+		$raw = get_post_types(array(
+			'public' => true,
+			'show_ui' => true,
+		));
+		foreach ($raw as $type) {
+			if (@$wds_options['post_types-' . $type . '-not_in_sitemap']) continue;
+			$types[] = $type;
+		}
+		$types_query = "AND post_type IN ('" . join("', '", $types) . "')";
+		$posts = $this->_db->get_results(
+			"SELECT ID, {$get_content} post_parent, post_type, post_modified FROM {$this->_db->posts} " .
+				"WHERE post_status = 'publish' " .
+				"AND post_password = '' " .
+				"{$types_query} " .
+				"ORDER BY post_parent ASC, post_modified DESC LIMIT " . WDS_SITEMAP_POST_LIMIT
+		);
+		$posts = $posts ? $posts : array();
 
 		foreach ($posts as $post) {
-			if ( strpos(wds_get_value( 'meta-robots', $post->ID ), 'noindex' ) !== false )
-				continue;
+			if (wds_get_value('meta-robots-noindex', $post->ID)) continue; // Not adding no-index files
+			if (wds_get_value('redirect', $post->ID)) continue; // Don't add redirected URLs
 
-			$link 	 = get_permalink( $post->ID );
-			$keywords = '';
-			$tags 	 = get_the_terms( $post->ID, 'post_tag' );
-			if ($tags) {
-				foreach ($tags as $tag) {
-					$keywords .= $tag->name.', ';
-				}
-			}
-			$keywords = preg_replace('/, $/','',$keywords);
-			$genre = wds_get_value("newssitemap-genre", $post->ID);
-			if (is_array($genre))
-				$genre = implode(",", $genre);
-			$genre = preg_replace('/^none,?/','',$genre);
+			$link = get_permalink($post->ID);
 
-			$output .= "\t<url>\n";
-			$output .= "\t\t<loc>".$link."</loc>\n";
-			$output .= "\t\t<n:news>\n";
-			$output .= "\t\t\t<n:publication>\n";
-			$output .= "\t\t\t\t<n:name>".$wds_options['newssitemapname']."</n:name>\n";
-			$output .= "\t\t\t\t<n:language>".substr(get_locale(),0,2)."</n:language>\n";
-			$output .= "\t\t\t</n:publication>\n";
-			$output .= "\t\t\t<n:genres>".$genre."</n:genres>\n";
-			$output .= "\t\t\t<n:publication_date>".$this->w3c_date($post->post_date)."</n:publication_date>\n";
-			$output .= "\t\t\t<n:title>".$this->xml_clean($post->post_title)."</n:title>\n";
-			if (strlen($keywords) > 0)
-				$output .= "\t\t\t<n:keywords>".$this->xml_clean($keywords)."</n:keywords>\n";
-			$output .= "\t\t</n:news>\n";
-			$output .= "\t</url>\n";
+			$canonical = wds_get_value('canonical', $post->ID);
+			$link = $canonical ? $canonical : $link;
+
+			$priority = wds_get_value('sitemap-priority', $post->ID);
+			$priority = $priority ? $priority : (
+				$post->post_parent ? 0.6 : 0.8
+			);
+
+			$content = isset($post->post_content) ? $post->post_content : '';
+
+			$this->_add_item(
+				$link,
+				$priority,
+				'weekly',
+				strtotime($post->post_modified),
+				$content
+			);
 		}
-		unset($posts);
+	}
 
-		$output .= '</urlset>';
+	/**
+	 * Loads taxonomies into the sitemap.
+	 */
+	private function _load_taxonomy_items () {
+		global $wds_options;
 
-		if ($this->write_sitemap( $sitemappath, $output ) && $echo)
-			echo sprintf( __( '%1$s: <a href="%2$s">News Sitemap</a> successfully (re-)generated.' , 'wds'), date( 'H:i' ), $sitemapurl ) . '<br/><br/>';
+		$tax = array();
+		$raw = get_taxonomies(array(
+			'public' => true,
+			'show_ui' => true,
+		), 'objects');
+		foreach ($raw as $tid => $taxonomy) {
+			if (@$wds_options['taxonomies-' . $taxonomy->name . '-not_in_sitemap']) continue;
+			$tax[] = $taxonomy->name;
+		}
+		$terms = get_terms($tax, array('hide_empty' => true));
+
+		foreach ($terms as $term) {
+			if (wds_get_term_meta($term, $term->taxonomy, 'wds_noindex')) continue;
+
+			$canonical = wds_get_term_meta($term, $term->taxonomy, 'wds_canonical');
+			$link = $canonical ? $canonical : get_term_link($term, $term->taxonomy);
+
+			$priority = ($term->count > 10) ? 0.6 : ($term->count > 3) ? 0.4 : 0.2;
+
+			$q = new WP_Query(array(
+				'tax_query' => array(
+					'taxonomy' => $term->taxonomy,
+					'field' => 'id',
+					'terms' => $term->term_id
+				),
+				'orderby' => 'date',
+				'order' => 'DESC',
+				'posts_per_page' => 1,
+			));
+			$time = $q->posts ? strtotime($q->posts[0]->post_date) : time();
+
+			$this->_add_item(
+				$link,
+				$priority,
+				'weekly',
+				$time
+			);
+		}
 	}
 }
 
@@ -597,28 +382,35 @@ function wds_xml_sitemap_init() {
 
 	if( isset( $plugin_page ) && $plugin_page == 'wds_wizard' ) {
 		$wds_xml = new WDS_XML_Sitemap();
-		$wds_news_xml = new WDS_XML_News_Sitemap();
 	}
 }
 add_action( 'admin_init', 'wds_xml_sitemap_init' );
 
 function wds_sitemaps_read() {
-	$sitemap_options = get_option( 'wds_sitemap_options' );
+	global $wds_options;
 
-	//$wds_sitemap_request_uri = str_replace( $_SERVER['HTTP_HOST'], '', str_replace( 'http://', '', $sitemap_options['sitemapurl'] ) );
-	$path = $sitemap_options['sitemappath'];
+	$dir = wp_upload_dir();
+	$path = trailingslashit($dir['basedir']);
+	if (!is_dir($path)) {
+		$path = $wds_options['sitemappath'];
+	} else {
+		$path = "{$path}sitemap.xml";
+	}
 
-	//if( $wds_sitemap_request_uri == $_SERVER['REQUEST_URI'] ) {
-	if (preg_match('~' . preg_quote('/sitemap.xml') . '$~', $_SERVER['REQUEST_URI'])) {
-		if( file_exists( $path ) ) {
-			header( 'Content-Type: text/xml' );
-			readfile( $path );
+	$is_gzip = preg_match('~\.gz$~i', $_SERVER['REQUEST_URI']);
+	$path = $is_gzip ? "{$path}.gz" : $path;
+
+	if (preg_match('~' . preg_quote('/sitemap.xml') . '(\.gz)?$~i', $_SERVER['REQUEST_URI'])) {
+		if (file_exists($path)) {
+			if ($is_gzip) header('Content-Encoding: gzip');
+			header('Content-Type: text/xml');
+			readfile($path);
 			die;
 		} else {
 			$sitemap = new WDS_XML_Sitemap;
-			$sitemap->generate_sitemap( $sitemap_options['sitemapurl'], $sitemap_options['sitemappath'] );
-			if( file_exists( $path ) ) {
-				header( 'Content-Type: text/xml' );
+			if(file_exists($path)) {
+				if ($is_gzip) header('Content-Encoding: gzip');
+				header('Content-Type: text/xml');
 				readfile( $path );
 				die;
 			} else wp_die( __( 'The sitemap file was not found.' , 'wds') );
@@ -626,3 +418,15 @@ function wds_sitemaps_read() {
 	}
 }
 add_action( 'init', 'wds_sitemaps_read' );
+
+add_action('wp_ajax_wds_update_sitemap', create_function('', '$sitemap = new WDS_XML_Sitemap;'));
+add_action('wp_ajax_wds_update_engines', create_function('', 'WDS_XML_Sitemap::notify_engines(1);'));
+
+global $wds_options;
+if (!@$wds_options['sitemap-disable-automatic-regeneration']) {
+	add_action('delete_post', create_function('', '$sitemap = new WDS_XML_Sitemap;'));
+	add_action('publish_post', create_function('', '$sitemap = new WDS_XML_Sitemap;'));
+
+	add_action('delete_page', create_function('', '$sitemap = new WDS_XML_Sitemap;'));
+	add_action('publish_page', create_function('', '$sitemap = new WDS_XML_Sitemap;'));
+}

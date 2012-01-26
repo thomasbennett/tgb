@@ -1,8 +1,77 @@
 <?php
 
+/**
+ * BuddyPress settings fields helper.
+ */
+function _wds_get_buddypress_fields () {
+	// BuddyPress Groups
+	if (function_exists('groups_get_groups')) { // We have BuddyPress groups, so let's get some settings
+		$opts = array(
+			'title' => __('BuddyPress', 'wds'),
+			'intro' => __('BuddyPress sitemaps integration.', 'wds'),
+			'options' => array(
+				array(
+					'type' => 'radio',
+					'name' => 'sitemap-buddypress-groups',
+					'title' => __('Include BuddyPress groups in my sitemaps', 'wds'),
+					'description' => __('Enabling this option will add all your BuddyPress groups to your sitemap.', 'wds'),
+					'items' => array(
+						__('No', 'wds'), __('Yes', 'wds')
+					),
+				),
+			),
+		);
+		$groups = groups_get_groups(array('per_page', WDS_BP_GROUPS_LIMIT));
+		$groups = @$groups['groups'] ? $groups['groups'] : array();
+		$exclude = array();
+		foreach ($groups as $group) {
+			$exclude["exclude-buddypress-group-{$group->slug}"] = $group->name;
+		}
+		if ($exclude) {
+			$opts['options'][] = array (
+				'type' => 'checkbox',
+				'name' => 'sitemap-buddypress',
+				'title' => __( 'Exclude these groups from my sitemap' , 'wds'),
+				'items' => $exclude,
+			);
+		}
+	}
+
+	// BuddyPress profiles
+	$opts['options'][] = array (
+		'type' => 'radio',
+		'name' => 'sitemap-buddypress-profiles',
+		'title' => __('Include BuddyPress profiles in my sitemaps', 'wds'),
+		'description' => __('Enabling this option will add all your BuddyPress profiles to your sitemap.', 'wds'),
+		'items' => array(
+			__('No', 'wds'), __('Yes', 'wds')
+		),
+	);
+	$wp_roles = new WP_Roles();
+	$wp_roles = $wp_roles->get_names();
+	$wp_roles = $wp_roles ? $wp_roles : array();
+	$exclude = array();
+	foreach ($wp_roles as $key=>$label) {
+		$exclude["exclude-profile-role-{$key}"] = $label;
+	}
+	if ($exclude) {
+		$opts['options'][] = array (
+			'type' => 'checkbox',
+			'name' => 'sitemap-buddypress-roles',
+			'title' => __( 'Exclude profiles with these roles from my sitemap' , 'wds'),
+			'items' => $exclude,
+		);
+	}
+
+
+	return $opts;
+}
+
 /* Add settings page */
 function wds_sitemaps_settings() {
 	//$name = 'wds_sitemaps'; // Removed plural
+	global $wds_options;
+
 	$name = 'wds_sitemap'; // Added singular
 	$title = __( 'Sitemaps' , 'wds');
 	$description = __( '<p>Here we will help you create a site map which are used to help search engines find all of the information on your site.</p>
@@ -48,7 +117,7 @@ function wds_sitemaps_settings() {
 		}
 	}
 	$fields['exclude'] = array(
-		'title' => __( 'Exclude' , 'wds'),
+		'title' => __('Exclude' , 'wds'),
 		'intro' => '',
 		'options' => array(
 			array(
@@ -63,6 +132,92 @@ function wds_sitemaps_settings() {
 				'title' => __( 'Exclude taxonomies' , 'wds'),
 				'items' => $taxonomies
 			)
+		)
+	);
+	if (defined('BP_VERSION')) {
+		$fields['buddypress'] = _wds_get_buddypress_fields();
+	}
+	$fields['options'] = array(
+		'title' => __('Options', 'wds'),
+		'intro' => __('Miscellaneous Sitemap related options.', 'wds'),
+		'options' => array(
+			array(
+				'type' => 'radio',
+				'name' => 'sitemap-images',
+				'title' => __('Include image items with the sitemap', 'wds'),
+				'description' => __('Enabling this option will considerably increase plugin memory consumption.', 'wds'),
+				'items' => array(
+					__('No', 'wds'), __('Yes', 'wds')
+				),
+			),
+			array(
+				'type' => 'radio',
+				'name' => 'sitemap-stylesheet',
+				'title' => __('Include stylesheet with the generated sitemap', 'wds'),
+				'description' => __('Stylesheet does not affect your sitemap functionality in any way.', 'wds'),
+				'items' => array(
+					__('No', 'wds'), __('Yes', 'wds')
+				),
+			),
+			array(
+				'type' => 'radio',
+				'name' => 'sitemap-dashboard-widget',
+				'title' => __('Show dashboard widget', 'wds'),
+				'description' => __('Enabling this option will add an Admin Dashboard widget that displays your sitemap information.', 'wds'),
+				'items' => array(
+					__('No', 'wds'), __('Yes', 'wds')
+				),
+			),
+			array(
+				'type' => 'radio',
+				'name' => 'sitemap-disable-automatic-regeneration',
+				'title' => __('Disable automatic sitemap updates', 'wds'),
+				'description' => __('Enable this option if you wish to update your sitemaps manually (by using the Dashboard widget or visiting this page) only.', 'wds'),
+				'items' => array(
+					__('No', 'wds'), __('Yes', 'wds')
+				),
+			),
+		)
+	);
+	$google_msg = @$wds_options['verification-google'] ? '<code>' . esc_html('<meta name="google-site-verification" value="') . esc_attr(@$wds_options['verification-google']) . esc_html('" />') . '</code>' : '<small>' . __('No META tag will be added', 'wds') . '</small>';
+	$bing_msg = @$wds_options['verification-bing'] ? '<code>' . esc_html('<meta name="msvalidate.01" value="') . esc_attr(@$wds_options['verification-bing']) . esc_html('" />') . '</code>' : '<small>' . __('No META tag will be added', 'wds') . '</small>';
+	$yahoo_msg = @$wds_options['verification-yahoo'] ? '<code>' . esc_html('<meta name="y_key" value="') . esc_attr(@$wds_options['verification-yahoo']) . esc_html('" />') . '</code>' : '<small>' . __('No META tag will be added', 'wds') . '</small>';
+	$fields['search-engines'] = array(
+		'title' => __('Search engines', 'wds'),
+		'intro' => __('Options related to direct interaction with search engines.', 'wds'),
+		'options' => array(
+			array(
+				'type' => 'text',
+				'class' => 'widefat',
+				'name' => 'verification-google',
+				'title' => __( 'Google site verification code' , 'wds'),
+				'description' => "<p>{$google_msg}</p>",
+			),
+			array(
+				'type' => 'text',
+				'class' => 'widefat',
+				'name' => 'verification-bing',
+				'title' => __( 'Bing site verification code' , 'wds'),
+				'description' => "<p>{$bing_msg}</p>",
+			),
+			array(
+				'type' => 'text',
+				'class' => 'widefat',
+				'name' => 'verification-yahoo',
+				'title' => __( 'Yahoo site verification code' , 'wds'),
+				'description' => "<p>{$yahoo_msg}</p>",
+			),
+			array(
+				'type' => 'checkbox',
+				'name' => 'engines',
+				'title' => __('Automatically notify search engines when my sitemap updates' , 'wds'),
+				'items' => array(
+					'ping-google' => __('Google', 'wds'),
+					'ping-bing' => __('Bing', 'wds'),
+					'ping-ask' => __('Ask.com', 'wds'),
+					'ping-yahoo' => __('Yahoo', 'wds'),
+				),
+			),
 		)
 	);
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPMU DEV SEO 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-13 14:54+0100\n"
-"PO-Revision-Date: 2011-06-13 14:54+0100\n"
+"POT-Creation-Date: 2011-12-22 15:31+0100\n"
+"PO-Revision-Date: 2011-12-22 15:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 "X-Poedit-KeywordsList: _e;__\n"
-"X-Poedit-Basepath: D:\\xampp\\htdocs\\seo-stable\\wp-content\\plugins\\wpmu-dev-seo\n"
+"X-Poedit-Basepath: D:\\xampp\\htdocs\\seo\\wp-content\\plugins\\wpmu-dev-seo\n"
 "X-Poedit-SearchPath-0: wds-files\n"
 "X-Poedit-SearchPath-1: wds-files/wds-core\n"
 "X-Poedit-SearchPath-2: wds-files/wds-core/admin\n"
@@ -26,6 +26,7 @@ msgstr ""
 "X-Poedit-SearchPath-6: wds-files/wds-sitemaps\n"
 
 #: wds-files/wds-autolinks/wds-autolinks-settings.php:6
+#: wds-files/wds-core/admin/wds-core-admin.php:359
 #: wds-files/wds-core/admin/wds-core-config.php:28
 msgid "Automatic Links"
 msgstr ""
@@ -61,12 +62,28 @@ msgstr ""
 msgid "Ignore posts and pages"
 msgstr ""
 
+#: wds-files/wds-autolinks/wds-autolinks-settings.php:56
+msgid "Paste in the IDs, slugs or titles for the post/pages you wish to exclude and separate them by commas"
+msgstr ""
+
 #: wds-files/wds-autolinks/wds-autolinks-settings.php:61
 msgid "Ignore keywords"
 msgstr ""
 
+#: wds-files/wds-autolinks/wds-autolinks-settings.php:62
+msgid "Paste in the keywords you wish to exclude and separate them by commas"
+msgstr ""
+
 #: wds-files/wds-autolinks/wds-autolinks-settings.php:67
 msgid "Custom Keywords"
+msgstr ""
+
+#: wds-files/wds-autolinks/wds-autolinks-settings.php:68
+msgid ""
+"Paste in the extra keywords you want to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords.\n"
+"\t\t\t\t<br />Example:<br />\n"
+"\t\t\t\t<code>WPMU DEV, plugins, themes, http://premium.wpmudev.org/<br />\n"
+"\t\t\t\tWordPress News, http://wpmu.org/<br /></code>"
 msgstr ""
 
 #: wds-files/wds-autolinks/wds-autolinks-settings.php:76
@@ -85,61 +102,65 @@ msgstr ""
 msgid "Case sensitive matching"
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:160
+#: wds-files/wds-autolinks/wds-autolinks-settings.php:81
+msgid "Prevent duplicate links"
+msgstr ""
+
+#: wds-files/wds-core/wds-core.php:173
 #, php-format
 msgid "XML %s Sitemap file found and writable."
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:162
+#: wds-files/wds-core/wds-core.php:175
 #, php-format
 msgid "XML %s Sitemap GZ file found but not writable, please make it writable!"
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:165
+#: wds-files/wds-core/wds-core.php:178
 #, php-format
 msgid "XML %s Sitemap file found but not writable, please make it writable!"
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:170
+#: wds-files/wds-core/wds-core.php:183
 #, php-format
 msgid "XML %s Sitemap file created (but still empty)."
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:172
+#: wds-files/wds-core/wds-core.php:185
 #, php-format
 msgid "XML %s Sitemap file not found and it could not be created, is the directory correct? And is it writable?"
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:180
+#: wds-files/wds-core/wds-core.php:193
 #, php-format
 msgid "<div class=\"correct\">XML %s Sitemap URL correct."
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:182
+#: wds-files/wds-core/wds-core.php:195
 #, php-format
 msgid "<div class=\"wrong\">XML %s Sitemap URL could not be verified, please make sure it's correct."
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:200
+#: wds-files/wds-core/wds-core.php:213
 msgid "Error: options page not found."
 msgstr ""
 
-#: wds-files/wds-core/wds-core.php:218
+#: wds-files/wds-core/wds-core.php:231
 msgid "Settings saved."
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-admin.php:214
 #: wds-files/wds-core/admin/wds-core-admin.php:216
 #: wds-files/wds-core/admin/wds-core-admin.php:218
-#: wds-files/wds-core/admin/wds-core-admin.php:369
-msgid "WPMU DEV SEO Wizard"
+#: wds-files/wds-core/admin/wds-core-admin.php:371
+msgid "Infinite SEO Wizard"
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-admin.php:214
 #: wds-files/wds-core/admin/wds-core-admin.php:216
 #: wds-files/wds-core/admin/wds-core-admin.php:218
 #: wds-files/wds-core/admin/wds-core-metabox.php:109
-msgid "WPMU DEV SEO"
+msgid "Infinite SEO"
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-admin.php:234
@@ -158,18 +179,81 @@ msgid " &amp; WP Super Cache flushed"
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-admin.php:258
-#: wds-files/wds-core/admin/wds-core-admin.php:379
+#: wds-files/wds-core/admin/wds-core-admin.php:401
 msgid "Save Settings"
 msgstr ""
 
+#: wds-files/wds-core/admin/wds-core-admin.php:359
 #: wds-files/wds-core/admin/wds-core-config.php:6
 msgid "Settings"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:359
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:66
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:76
+msgid "Sitemaps"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:359
+#: wds-files/wds-onpage/wds-onpage-settings.php:6
+msgid "Title & Meta"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:359
+msgid "SEOmoz"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:364
+#, php-format
+msgid "Step %d: %s"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:377
+#, php-format
+msgid "Your network admin prevented access to '%s', please move onto next step."
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:387
+msgid "Allow Site Admin access"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:388
+msgid "<p>If enabled, this tab will be available to Site Admins once you switch to per-blog mode.</p>"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:390
+msgid "Show this to Site Admins:"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:393
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:19
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:47
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:150
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:159
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:168
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:177
+msgid "Yes"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:396
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:19
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:47
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:150
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:159
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:168
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:177
+msgid "No"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-admin.php:406
+#, php-format
+msgid "You've chosen not to set up '%s', please move onto next step."
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-config.php:7
 msgid ""
 "\n"
-"\t\t<p>WPMU DEV SEO aims to take care of every SEO option that a site requires, in one easy bundle.</p>\n"
+"\t\t<p>Infinite SEO aims to take care of every SEO option that a site requires, in one easy bundle.</p>\n"
 "\t\t<p>It is made of several components which you complete as you work through our simple SEO Set Up Wizard:</p>\n"
 "\t\t<ul>\n"
 "\t\t\t<li><b>Step 1 Settings</b>: allows you to choose which steps you want to include in your SEO Set Up Wizard. In most situations you would want to leave all four of the active components below checked.</li>\n"
@@ -202,7 +286,7 @@ msgid "SEOmoz Report"
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-config.php:32
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:17
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:86
 msgid "XML Sitemap"
 msgstr ""
 
@@ -257,7 +341,7 @@ msgid "Robots Meta"
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-metabox.php:211
-msgid "70 characters maximum"
+msgid "Up to 70 characters recommended"
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-metabox.php:222
@@ -276,94 +360,102 @@ msgstr ""
 msgid "Separate keywords with commas"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:249
-#: wds-files/wds-core/admin/wds-core-metabox.php:255
+#: wds-files/wds-core/admin/wds-core-metabox.php:236
+msgid "If you enable using tags, post tags will be merged in with any other keywords you enter in the text box."
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-metabox.php:240
+msgid "I want to use post tags in addition to my keywords"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-metabox.php:253
+#: wds-files/wds-core/admin/wds-core-metabox.php:259
 msgid "Index"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:252
+#: wds-files/wds-core/admin/wds-core-metabox.php:256
 msgid "Noindex"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:262
-#: wds-files/wds-core/admin/wds-core-metabox.php:268
+#: wds-files/wds-core/admin/wds-core-metabox.php:266
+#: wds-files/wds-core/admin/wds-core-metabox.php:272
 msgid "Follow"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:265
+#: wds-files/wds-core/admin/wds-core-metabox.php:269
 msgid "Nofollow"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:275
+#: wds-files/wds-core/admin/wds-core-metabox.php:279
 msgid "NO ODP (Block Open Directory Project description of the page)"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:276
+#: wds-files/wds-core/admin/wds-core-metabox.php:280
 msgid "NO YDIR (Don't display the Yahoo! Directory titles and abstracts)"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:277
+#: wds-files/wds-core/admin/wds-core-metabox.php:281
 msgid "No Archive"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:278
+#: wds-files/wds-core/admin/wds-core-metabox.php:282
 msgid "No Snippet"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:286
+#: wds-files/wds-core/admin/wds-core-metabox.php:290
 msgid "Advanced"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:291
+#: wds-files/wds-core/admin/wds-core-metabox.php:295
 msgid "Meta Robots"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:293
+#: wds-files/wds-core/admin/wds-core-metabox.php:297
 msgid "<code>meta</code> robots settings for this page."
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:301
+#: wds-files/wds-core/admin/wds-core-metabox.php:305
 msgid "Canonical URL"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:311
+#: wds-files/wds-core/admin/wds-core-metabox.php:315
 msgid "301 Redirect"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:325
+#: wds-files/wds-core/admin/wds-core-metabox.php:328
 msgid "Automatic prioritization"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:326
+#: wds-files/wds-core/admin/wds-core-metabox.php:329
 msgid "1 - Highest priority"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:328
-msgid "Default for first tier pages"
-msgstr ""
-
-#: wds-files/wds-core/admin/wds-core-metabox.php:330
-msgid "Default for second tier pages and posts"
-msgstr ""
-
 #: wds-files/wds-core/admin/wds-core-metabox.php:331
+msgid "High priority (root pages default)"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-metabox.php:333
+msgid "Secondary priority (subpages default)"
+msgstr ""
+
+#: wds-files/wds-core/admin/wds-core-metabox.php:334
 msgid "Medium priority"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:335
+#: wds-files/wds-core/admin/wds-core-metabox.php:338
 msgid "Lowest priority"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:337
+#: wds-files/wds-core/admin/wds-core-metabox.php:340
 msgid "Sitemap Priority"
 msgstr ""
 
-#: wds-files/wds-core/admin/wds-core-metabox.php:338
+#: wds-files/wds-core/admin/wds-core-metabox.php:341
 msgid "The priority given to this page in the XML sitemap."
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-taxonomy.php:43
-msgid "WPMU DEV SEO Settings "
+msgid "Infinite SEO Settings "
 msgstr ""
 
 #: wds-files/wds-core/admin/wds-core-taxonomy.php:46
@@ -400,10 +492,6 @@ msgstr ""
 msgid "Nofollow this %s"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:6
-msgid "Title & Meta"
-msgstr ""
-
 #: wds-files/wds-onpage/wds-onpage-settings.php:7
 #, php-format
 msgid ""
@@ -417,10 +505,11 @@ msgid ""
 "\tbut it has been customized so that the Home Meta Description is WPMU DEV Premium is:\n"
 "\t<blockquote>devoted to plugins, themes, resources and support to assist you in creating the absolute best WordPress MU (WPMU) site you can.</blockquote>\n"
 "\t<p><img src=\"%s\" alt=\"title and description sample\" /></p>\n"
-"\t<p>This plugin also adds a WPMU DEV SEO module below the Write Post / Page editor which you can use to customise SEO options for individual posts and pages.</p>"
+"\t<p>This plugin also adds a Infinite SEO module below the Write Post / Page editor which you can use to customise SEO options for individual posts and pages.</p>"
 msgstr ""
 
 #: wds-files/wds-onpage/wds-onpage-settings.php:22
+#: wds-files/wds-onpage/wds-onpage-settings.php:45
 msgid "Home"
 msgstr ""
 
@@ -432,67 +521,75 @@ msgstr ""
 msgid "Home Meta Description"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:52
-#: wds-files/wds-onpage/wds-onpage-settings.php:74
+#: wds-files/wds-onpage/wds-onpage-settings.php:40
+msgid "You seem to be using a static front page. You can tweak its SEO settings using the Infinite SEO metabox in your Page editor."
+msgstr ""
+
+#: wds-files/wds-onpage/wds-onpage-settings.php:42
+msgid "You can do the same for your selected posts page"
+msgstr ""
+
+#: wds-files/wds-onpage/wds-onpage-settings.php:62
+#: wds-files/wds-onpage/wds-onpage-settings.php:84
 #, php-format
 msgid "%s Title"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:58
-#: wds-files/wds-onpage/wds-onpage-settings.php:80
+#: wds-files/wds-onpage/wds-onpage-settings.php:68
+#: wds-files/wds-onpage/wds-onpage-settings.php:90
 #, php-format
 msgid "%s Meta Description"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:87
+#: wds-files/wds-onpage/wds-onpage-settings.php:97
 msgid "Author Archive"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:93
+#: wds-files/wds-onpage/wds-onpage-settings.php:103
 msgid "Author Archive Title"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:99
+#: wds-files/wds-onpage/wds-onpage-settings.php:109
 msgid "Author Archive Meta Description"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:105
+#: wds-files/wds-onpage/wds-onpage-settings.php:115
 msgid "Date Archives"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:111
+#: wds-files/wds-onpage/wds-onpage-settings.php:121
 msgid "Date Archives Title"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:117
+#: wds-files/wds-onpage/wds-onpage-settings.php:127
 msgid "Date Archives Description"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:123
+#: wds-files/wds-onpage/wds-onpage-settings.php:133
 msgid "Search Page"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:129
+#: wds-files/wds-onpage/wds-onpage-settings.php:139
 msgid "Search Page Title"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:135
+#: wds-files/wds-onpage/wds-onpage-settings.php:145
 msgid "Search Page Description"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:141
+#: wds-files/wds-onpage/wds-onpage-settings.php:151
 msgid "404 Page"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:147
+#: wds-files/wds-onpage/wds-onpage-settings.php:157
 msgid "404 Page Title"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:153
+#: wds-files/wds-onpage/wds-onpage-settings.php:163
 msgid "404 Page Description"
 msgstr ""
 
-#: wds-files/wds-onpage/wds-onpage-settings.php:159
+#: wds-files/wds-onpage/wds-onpage-settings.php:169
 #, php-format
 msgid ""
 "\n"
@@ -745,11 +842,78 @@ msgstr ""
 msgid "For posts / pages specific metrics refer to the SEOmoz URL metrics module on the Edit Post / Page screen,"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:7
-msgid "Sitemaps"
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:10
+#, php-format
+msgid "It was last updated on %s, at %s."
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:8
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:10
+msgid "Your sitemap hasn't been updated recently."
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:11
+msgid "Update sitemap now"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:12
+msgid "Force search engines notification"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:13
+msgid "Updating..."
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:16
+#, php-format
+msgid "Your sitemap contains <a href=\"%s\" target=\"_blank\"><b>%d</b> items</a>."
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:27
+#, php-format
+msgid "Last notified on %s, at %s."
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:27
+msgid "Not notified"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-dashboard-widget.php:31
+msgid "<div>Search engines haven't been recently updated</div>"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:10
+msgid "BuddyPress"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:11
+msgid "BuddyPress sitemaps integration."
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:16
+msgid "Include BuddyPress groups in my sitemaps"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:17
+msgid "Enabling this option will add all your BuddyPress groups to your sitemap."
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:34
+msgid "Exclude these groups from my sitemap"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:44
+msgid "Include BuddyPress profiles in my sitemaps"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:45
+msgid "Enabling this option will add all your BuddyPress profiles to your sitemap."
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:61
+msgid "Exclude profiles with these roles from my sitemap"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:77
 msgid ""
 "<p>Here we will help you create a site map which are used to help search engines find all of the information on your site.</p>\n"
 "\t<p>This is one of the basics of SEO. A sitemap helps search engines like Google, Bing, Yahoo and Ask.com to better index your blog. Search engines are better able to crawl through your site with a structured sitemap of where your content leads. This plugin supports all kinds of WordPress-generated pages as well as custom URLs. Whenever you create a new post, it will notify major search engines to come crawl your new content.</p>\n"
@@ -757,109 +921,113 @@ msgid ""
 "\t<p>(Leaving these off of a sitemap won't guarantee that a search engine won't find the information by other means!)</p>"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:23
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:93
 msgid "Path to the XML Sitemap"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:30
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:100
 msgid "URL to the XML Sitemap"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:50
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:120
 msgid "Exclude"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:56
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:126
 msgid "Exclude post types"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:62
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:132
 msgid "Exclude taxonomies"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:93
-#, php-format
-msgid "Poster image for %1$s video in %2$s"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:141
+msgid "Options"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:241
-#, php-format
-msgid "Video Metadata updated for %s"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:142
+msgid "Miscellaneous Sitemap related options."
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:313
-#: wds-files/wds-sitemaps/wds-sitemaps.php:550
-#, php-format
-msgid "%s posts and pages found."
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:147
+msgid "Include image items with the sitemap"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:409
-#, php-format
-msgid "%s taxonomy entries found."
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:148
+msgid "Enabling this option will considerably increase plugin memory consumption."
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:456
-#, php-format
-msgid "XML Sitemap Generated by WPMU DEV SEO, containing %s"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:156
+msgid "Include stylesheet with the generated sitemap"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:459
-#: wds-files/wds-sitemaps/wds-sitemaps.php:545
-msgid "Starting to generate output."
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:157
+msgid "Stylesheet does not affect your sitemap functionality in any way."
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:484
-#, php-format
-msgid "%1$s: <a href=\"%2$s\">Sitemap</a> successfully (re-)generated."
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:165
+msgid "Show dashboard widget"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:486
-#, php-format
-msgid "%1$s: <a href=\"%2$s\">Something went wrong...</a>."
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:166
+msgid "Enabling this option will add an Admin Dashboard widget that displays your sitemap information."
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:514
-msgid "Google News Genre"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:174
+msgid "Disable automatic sitemap updates"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:515
-msgid "Genre to show in Google News Sitemap."
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:175
+msgid "Enable this option if you wish to update your sitemaps manually (by using the Dashboard widget or visiting this page) only."
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:517
-msgid "Press Release"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:182
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:183
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:184
+msgid "No META tag will be added"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:518
-msgid "Satire"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:186
+msgid "Search engines"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:519
-msgid "Blog"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:187
+msgid "Options related to direct interaction with search engines."
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:520
-msgid "Op-Ed"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:193
+msgid "Google site verification code"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:521
-msgid "Opinion"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:200
+msgid "Bing site verification code"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:522
-msgid "User Generated"
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:207
+msgid "Yahoo site verification code"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:542
-msgid "XML NEWS Sitemap Generated by WPMU DEV SEO "
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:213
+msgid "Automatically notify search engines when my sitemap updates"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:591
-#, php-format
-msgid "%1$s: <a href=\"%2$s\">News Sitemap</a> successfully (re-)generated."
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:215
+msgid "Google"
 msgstr ""
 
-#: wds-files/wds-sitemaps/wds-sitemaps.php:624
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:216
+msgid "Bing"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:217
+msgid "Ask.com"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps-settings.php:218
+msgid "Yahoo"
+msgstr ""
+
+#: wds-files/wds-sitemaps/wds-sitemaps.php:416
 msgid "The sitemap file was not found."
 msgstr ""
 
